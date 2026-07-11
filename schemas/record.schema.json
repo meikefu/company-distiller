@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "record.schema.json",
+  "title": "规范化的内部或公开记录",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "source_id", "subject_ids", "observed_at", "data", "policy_id", "created_by_run"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "record_type": {
+      "enum": ["public_fact", "crm_account", "crm_contact", "crm_opportunity", "crm_activity", "interview_segment", "contract_term", "support_ticket", "product_usage"]
+    },
+    "source_id": {"type": "string"},
+    "subject_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "valid_from": {"type": ["string", "null"], "format": "date-time"},
+    "valid_to": {"type": ["string", "null"], "format": "date-time"},
+    "data": {"type": "object", "minProperties": 1},
+    "policy_id": {"type": "string"},
+    "created_by_run": {"type": "string"}
+  }
+}

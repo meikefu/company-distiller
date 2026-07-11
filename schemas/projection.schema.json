@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "projection.schema.json",
+  "title": "受治理 Skill 的投影清单",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "company_id", "snapshot_id", "audience", "purpose", "created_at", "claim_ids", "history_claim_ids", "conflict_claim_ids", "retraction_claim_ids", "redacted_conflict_count", "evidence_ids", "record_ids", "event_ids", "run_ids", "relation_ids", "content_hash"],
+  "properties": {
+    "id": {"type": "string"},
+    "company_id": {"type": "string"},
+    "snapshot_id": {"type": "string"},
+    "audience": {"enum": ["public", "sales", "customer-success", "executive"]},
+    "purpose": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "history_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "conflict_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "retraction_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "redacted_conflict_count": {"type": "integer", "minimum": 0},
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "record_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "event_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "run_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "relation_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run-summary.schema.json",
+  "title": "可安全投影的运行概要",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "completed_at", "mode", "model", "prompt_version", "input_digest", "result_snapshot_id"],
+  "properties": {
+    "id": {"type": "string"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "mode": {"enum": ["initial", "incremental", "rebuild"]},
+    "model": {"type": "string", "minLength": 1},
+    "prompt_version": {"type": "string", "minLength": 1},
+    "input_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "result_snapshot_id": {"type": "string"}
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "provenance-record.schema.json",
+  "title": "不含原始数据的投影记录来源链",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "record_type", "source_id", "observed_at", "valid_from", "valid_to", "policy_id", "created_by_run"],
+  "properties": {
+    "id": {"type": "string"},
+    "record_type": {"enum": ["public_fact", "crm_account", "crm_contact", "crm_opportunity", "crm_activity", "interview_segment", "contract_term", "support_ticket", "product_usage"]},
+    "source_id": {"type": "string"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "valid_from": {"type": ["string", "null"], "format": "date-time"},
+    "valid_to": {"type": ["string", "null"], "format": "date-time"},
+    "policy_id": {"type": "string"},
+    "created_by_run": {"type": "string"}
+  }
+}

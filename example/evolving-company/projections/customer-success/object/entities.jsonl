@@ -1,0 +1,3 @@
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"company","external_ids":{},"id":"company:northstar-industries","name":"Northstar Industries","parent_id":null,"policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"product","external_ids":{},"id":"product:orbit-ops","name":"OrbitOps","parent_id":"company:northstar-industries","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:003","entity_type":"subscription","external_ids":{},"id":"subscription:orbit-prod","name":"OrbitOps 生产环境订阅","parent_id":null,"policy_id":"policy:confidential-cs","scope":"product_use_service"}

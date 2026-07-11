@@ -1,0 +1,104 @@
+{
+  "rubric": "references/evaluation-rubric.md",
+  "command": "python3 scripts/run_acceptance.py",
+  "passed": 16,
+  "total": 16,
+  "gates": [
+    {
+      "id": "G01",
+      "name": "Skill 包",
+      "status": "PASS",
+      "evidence": "skill-creator 官方校验器：Skill is valid!；UI 元数据已对齐"
+    },
+    {
+      "id": "G02",
+      "name": "Schema 覆盖",
+      "status": "PASS",
+      "evidence": "15 个 schema 可解析，并通过规范对象与投影夹具校验"
+    },
+    {
+      "id": "G03",
+      "name": "内部数据保真",
+      "status": "PASS",
+      "evidence": "类型化记录账本包含 contract_term, crm_account, crm_opportunity, interview_segment, product_usage, support_ticket"
+    },
+    {
+      "id": "G04",
+      "name": "溯源闭合",
+      "status": "PASS",
+      "evidence": "所有引用均闭合；注入的证据环路被正确拒绝"
+    },
+    {
+      "id": "G05",
+      "name": "实体范围",
+      "status": "PASS",
+      "evidence": "公司、法律实体、业务单元、角色、产品和账户保持清晰区分"
+    },
+    {
+      "id": "G06",
+      "name": "时间完整性",
+      "status": "PASS",
+      "evidence": "双时间字段完整；无效的 Claim 与事件时间区间均被拒绝"
+    },
+    {
+      "id": "G07",
+      "name": "增量并发控制",
+      "status": "PASS",
+      "evidence": "3 次运行均成功应用；重复运行和过期基准运行被拒绝，工作区字节保持不变"
+    },
+    {
+      "id": "G08",
+      "name": "不可变历史",
+      "status": "PASS",
+      "evidence": "所有规范账本保持仅追加；更正与撤回均使用生命周期链接"
+    },
+    {
+      "id": "G09",
+      "name": "变更语义",
+      "status": "PASS",
+      "evidence": "测试夹具覆盖全部六种变更结果"
+    },
+    {
+      "id": "G10",
+      "name": "确定性重放",
+      "status": "PASS",
+      "evidence": "两次全新重放的哈希一致：sha256:1ddc085d61d2c6d7c23dda4b11af35bcd5ccf1485a6fbddbd77c6ea70ef786b4"
+    },
+    {
+      "id": "G11",
+      "name": "策略继承",
+      "status": "PASS",
+      "evidence": "注入的客户成功证据公开降级在写入前被拒绝，工作区保持不变"
+    },
+    {
+      "id": "G12",
+      "name": "投影隔离",
+      "status": "PASS",
+      "evidence": "四个受治理的 Skill 均通过校验，且只包含安全的记录/事件溯源存根"
+    },
+    {
+      "id": "G13",
+      "name": "示例敏感值隔离",
+      "status": "PASS",
+      "evidence": "四个固定测试哨兵均符合示例受众允许列表矩阵；该检查不代表通用秘密或 PII 扫描"
+    },
+    {
+      "id": "G14",
+      "name": "严格校验",
+      "status": "PASS",
+      "evidence": "空包、占位符、无效枚举、重复 ID、断裂引用和畸形表格夹具均被拒绝"
+    },
+    {
+      "id": "G15",
+      "name": "运行时行为",
+      "status": "PASS",
+      "evidence": "所有投影均包含证据日期、过期语义、认知边界、时间线和行为测试提示词"
+    },
+    {
+      "id": "G16",
+      "name": "回归测试套件",
+      "status": "PASS",
+      "evidence": "标准库 unittest 测试套件通过（5 项测试）"
+    }
+  ]
+}

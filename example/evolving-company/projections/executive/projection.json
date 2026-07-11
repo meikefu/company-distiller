@@ -1,0 +1,74 @@
+{
+  "id": "projection:northstar-industries:003:executive",
+  "company_id": "company:northstar-industries",
+  "snapshot_id": "snapshot:northstar:003",
+  "audience": "executive",
+  "purpose": "executive-review",
+  "claim_ids": [
+    "claim:company-category-v2",
+    "claim:contract-obligation",
+    "claim:opportunity-stage-validation",
+    "claim:orbit-positioning-v1",
+    "claim:sev1-observed",
+    "claim:usage-active-sites"
+  ],
+  "history_claim_ids": [
+    "claim:company-category-v1",
+    "claim:opportunity-stage-discovery",
+    "claim:procurement-centralized",
+    "claim:procurement-statement-retracted"
+  ],
+  "conflict_claim_ids": [
+    "claim:orbit-positioning-v1",
+    "claim:sev1-observed"
+  ],
+  "retraction_claim_ids": [
+    "claim:procurement-statement-retracted"
+  ],
+  "redacted_conflict_count": 0,
+  "evidence_ids": [
+    "evidence:contract-pricing",
+    "evidence:crm-opportunity",
+    "evidence:crm-validation",
+    "evidence:interview-correction",
+    "evidence:interview-procurement",
+    "evidence:public-category",
+    "evidence:public-category-v2",
+    "evidence:public-product",
+    "evidence:ticket-sev1",
+    "evidence:usage-active-sites"
+  ],
+  "record_ids": [
+    "record:contract-term-001",
+    "record:crm-opportunity-001",
+    "record:crm-opportunity-002",
+    "record:interview-correction",
+    "record:interview-segment-001",
+    "record:public-profile-v1",
+    "record:public-profile-v2",
+    "record:support-ticket-042",
+    "record:usage-june"
+  ],
+  "event_ids": [
+    "event:contract-signed",
+    "event:interview-001",
+    "event:opportunity-discovery",
+    "event:opportunity-validation",
+    "event:public-profile-observed",
+    "event:ticket-resolved-042",
+    "event:usage-june"
+  ],
+  "run_ids": [
+    "run:northstar:001",
+    "run:northstar:002",
+    "run:northstar:003"
+  ],
+  "relation_ids": [
+    "relation:account-has-opportunity",
+    "relation:contract-party-northstar",
+    "relation:northstar-offers-orbit",
+    "relation:subscription-uses-orbit"
+  ],
+  "created_at": "2026-07-01T01:00:00+00:00",
+  "content_hash": "sha256:b565897f0d5f1cae839f8b9fa47a6c1e333b23d13180f96d7b5371cac2610471"
+}

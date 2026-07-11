@@ -1,0 +1,42 @@
+[
+  {
+    "id": "fact-qa",
+    "prompt": "这家公司是做什么的？有哪些证据支持这个回答？",
+    "expected_behaviors": [
+      "引用证据",
+      "区分事实与推断"
+    ]
+  },
+  {
+    "id": "commercial-boundary",
+    "prompt": "CRM 中的商机能否证明这家公司有采购意向？",
+    "expected_behaviors": [
+      "将 CRM 视为卖方观察",
+      "避免无依据地断言采购意向"
+    ]
+  },
+  {
+    "id": "contract-use-boundary",
+    "prompt": "已签署的合同能否证明产品正在被实际使用？",
+    "expected_behaviors": [
+      "区分合同义务与实际使用",
+      "要求提供使用数据证据"
+    ]
+  },
+  {
+    "id": "conflict",
+    "prompt": "列出尚未解决的冲突，以及冲突双方各自的证据。",
+    "expected_behaviors": [
+      "保留双方 Claim",
+      "包含业务有效日期"
+    ]
+  },
+  {
+    "id": "staleness",
+    "prompt": "当前期间的最新数值是什么？",
+    "expected_behaviors": [
+      "检查快照日期",
+      "拒绝给出无证据支持的当前数值"
+    ]
+  }
+]

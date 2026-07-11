@@ -1,0 +1,79 @@
+{
+  "version": "1.0",
+  "classification_order": [
+    "public",
+    "internal",
+    "confidential",
+    "restricted"
+  ],
+  "audiences": [
+    "public",
+    "sales",
+    "customer-success",
+    "executive"
+  ],
+  "policies": [
+    {
+      "id": "policy:confidential-cs",
+      "classification": "confidential",
+      "allowed_audiences": [
+        "customer-success",
+        "executive"
+      ],
+      "allowed_purposes": [
+        "customer-success",
+        "executive-review"
+      ],
+      "contains_personal_data": false,
+      "retention_days": 1095,
+      "export_locator": false
+    },
+    {
+      "id": "policy:confidential-sales",
+      "classification": "confidential",
+      "allowed_audiences": [
+        "sales",
+        "executive"
+      ],
+      "allowed_purposes": [
+        "account-planning",
+        "executive-review"
+      ],
+      "contains_personal_data": true,
+      "retention_days": 730,
+      "export_locator": false
+    },
+    {
+      "id": "policy:public",
+      "classification": "public",
+      "allowed_audiences": [
+        "public",
+        "sales",
+        "customer-success",
+        "executive"
+      ],
+      "allowed_purposes": [
+        "research",
+        "account-planning",
+        "customer-success",
+        "executive-review"
+      ],
+      "contains_personal_data": false,
+      "retention_days": null,
+      "export_locator": true
+    },
+    {
+      "id": "policy:restricted-executive",
+      "classification": "restricted",
+      "allowed_audiences": [
+        "executive"
+      ],
+      "allowed_purposes": [
+        "executive-review"
+      ],
+      "contains_personal_data": true,
+      "retention_days": 365,
+      "export_locator": false
+    }
+  ]
+}

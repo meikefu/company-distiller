@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entity.schema.json",
+  "title": "公司对象实体",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "entity_type", "name", "scope", "policy_id", "created_by_run"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*:[a-zA-Z0-9._-]+$"},
+    "entity_type": {
+      "enum": ["company", "legal_entity", "business_unit", "site", "person", "role", "account", "opportunity", "contract", "product", "subscription", "ticket", "metric", "market", "risk"]
+    },
+    "name": {"type": "string", "minLength": 1},
+    "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "parent_id": {"type": ["string", "null"]},
+    "scope": {"enum": ["company", "commercial_relationship", "product_use_service"]},
+    "external_ids": {"type": "object", "additionalProperties": {"type": "string"}},
+    "policy_id": {"type": "string"},
+    "created_by_run": {"type": "string"}
+  }
+}

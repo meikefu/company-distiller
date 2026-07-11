@@ -1,0 +1,18 @@
+{
+  "id": "run:northstar:002",
+  "company_id": "company:northstar-industries",
+  "base_snapshot_id": "snapshot:northstar:001",
+  "started_at": "2026-03-10T11:58:00+00:00",
+  "completed_at": "2026-03-10T12:00:00+00:00",
+  "mode": "incremental",
+  "model": "fixture-distiller-v1",
+  "prompt_version": "company-distiller-v2",
+  "input_digest": "sha256:3a9fb01193db36bfd1dbccdcbb1bf65573c701d7aad4dff3cf6ba2207d487a7e",
+  "connector_cursors": {
+    "public": "2026-03-10",
+    "crm": "cursor-001",
+    "interview": "interview-001"
+  },
+  "status": "completed",
+  "result_snapshot_id": "snapshot:northstar:002"
+}

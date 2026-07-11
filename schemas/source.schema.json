@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source.schema.json",
+  "title": "不可变的数据源版本",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "source_type", "title", "source_date", "observed_at", "content_hash", "connector", "external_id", "version", "locator", "policy_id", "created_by_run"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "source_type": {
+      "enum": ["annual_report", "quarterly_report", "official_website", "product_page", "news", "crm", "interview", "contract", "support", "product_analytics", "regulatory", "other"]
+    },
+    "title": {"type": "string", "minLength": 1},
+    "source_date": {"type": "string", "format": "date-time"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "connector": {"type": "string", "minLength": 1},
+    "external_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "locator": {"type": "string", "minLength": 1},
+    "policy_id": {"type": "string"},
+    "created_by_run": {"type": "string"}
+  }
+}

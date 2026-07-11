@@ -1,0 +1,1 @@
+{"confidence":"high","context":null,"created_by_run":"run:northstar:001","evidence_ids":["evidence:public-product"],"id":"relation:northstar-offers-orbit","object_id":"product:orbit-ops","observed_at":"2026-01-01T00:00:00+00:00","policy_id":"policy:public","predicate":"offers","subject_id":"company:northstar-industries","valid_from":"2026-01-01T00:00:00+00:00","valid_to":null}

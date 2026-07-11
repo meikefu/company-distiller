@@ -1,0 +1,11 @@
+{"change_type":"new","claim_id":"claim:company-category-v1","id":"change:run:northstar:001:claim:company-category-v1","related_claim_ids":[],"run_id":"run:northstar:001"}
+{"change_type":"new","claim_id":"claim:orbit-positioning-v1","id":"change:run:northstar:001:claim:orbit-positioning-v1","related_claim_ids":[],"run_id":"run:northstar:001"}
+{"change_type":"reinforced","claim_id":"claim:company-category-v2","id":"change:run:northstar:002:claim:company-category-v2","related_claim_ids":["claim:company-category-v1"],"run_id":"run:northstar:002"}
+{"change_type":"new","claim_id":"claim:opportunity-stage-discovery","id":"change:run:northstar:002:claim:opportunity-stage-discovery","related_claim_ids":[],"run_id":"run:northstar:002"}
+{"change_type":"new","claim_id":"claim:procurement-centralized","id":"change:run:northstar:002:claim:procurement-centralized","related_claim_ids":[],"run_id":"run:northstar:002"}
+{"change_type":"superseded","claim_id":"claim:opportunity-stage-validation","id":"change:run:northstar:003:claim:opportunity-stage-validation","related_claim_ids":["claim:opportunity-stage-discovery"],"run_id":"run:northstar:003"}
+{"change_type":"retracted","claim_id":"claim:procurement-statement-retracted","id":"change:run:northstar:003:claim:procurement-statement-retracted","related_claim_ids":["claim:procurement-centralized"],"run_id":"run:northstar:003"}
+{"change_type":"new","claim_id":"claim:contract-obligation","id":"change:run:northstar:003:claim:contract-obligation","related_claim_ids":[],"run_id":"run:northstar:003"}
+{"change_type":"conflicted","claim_id":"claim:sev1-observed","id":"change:run:northstar:003:claim:sev1-observed","related_claim_ids":["claim:orbit-positioning-v1"],"run_id":"run:northstar:003"}
+{"change_type":"new","claim_id":"claim:usage-active-sites","id":"change:run:northstar:003:claim:usage-active-sites","related_claim_ids":[],"run_id":"run:northstar:003"}
+{"change_type":"unchanged","claim_id":"claim:usage-implies-satisfaction","id":"change:run:northstar:003:claim:usage-implies-satisfaction","related_claim_ids":[],"run_id":"run:northstar:003"}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "change.schema.json",
+  "title": "单次运行中的 Claim 变更",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "run_id", "claim_id", "change_type", "related_claim_ids"],
+  "properties": {
+    "id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "claim_id": {"type": "string"},
+    "change_type": {"enum": ["new", "reinforced", "superseded", "conflicted", "retracted", "unchanged"]},
+    "related_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+  }
+}

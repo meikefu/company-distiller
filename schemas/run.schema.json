@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "run.schema.json",
+  "title": "蒸馏运行",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "company_id", "base_snapshot_id", "started_at", "completed_at", "mode", "model", "prompt_version", "input_digest", "connector_cursors", "status", "result_snapshot_id"],
+  "properties": {
+    "id": {"type": "string"},
+    "company_id": {"type": "string"},
+    "base_snapshot_id": {"type": ["string", "null"]},
+    "started_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "mode": {"enum": ["initial", "incremental", "rebuild"]},
+    "model": {"type": "string", "minLength": 1},
+    "prompt_version": {"type": "string", "minLength": 1},
+    "input_digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "connector_cursors": {"type": "object", "additionalProperties": {"type": "string"}},
+    "status": {"const": "completed"},
+    "result_snapshot_id": {"type": "string"}
+  }
+}

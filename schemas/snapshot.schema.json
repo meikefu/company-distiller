@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "snapshot.schema.json",
+  "title": "不可变的公司对象快照",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "company_id", "created_at", "created_by_run", "parent_snapshot_id", "active_claim_ids", "conflict_claim_ids", "retraction_claim_ids", "active_relation_ids", "content_hash"],
+  "properties": {
+    "id": {"type": "string"},
+    "company_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "created_by_run": {"type": "string"},
+    "parent_snapshot_id": {"type": ["string", "null"]},
+    "active_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "conflict_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "retraction_claim_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "active_relation_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

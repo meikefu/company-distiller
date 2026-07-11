@@ -1,0 +1,59 @@
+{
+  "id": "projection:northstar-industries:003:sales",
+  "company_id": "company:northstar-industries",
+  "snapshot_id": "snapshot:northstar:003",
+  "audience": "sales",
+  "purpose": "account-planning",
+  "claim_ids": [
+    "claim:company-category-v2",
+    "claim:opportunity-stage-validation",
+    "claim:orbit-positioning-v1"
+  ],
+  "history_claim_ids": [
+    "claim:company-category-v1",
+    "claim:opportunity-stage-discovery",
+    "claim:procurement-centralized",
+    "claim:procurement-statement-retracted"
+  ],
+  "conflict_claim_ids": [
+    "claim:orbit-positioning-v1"
+  ],
+  "retraction_claim_ids": [
+    "claim:procurement-statement-retracted"
+  ],
+  "redacted_conflict_count": 1,
+  "evidence_ids": [
+    "evidence:crm-opportunity",
+    "evidence:crm-validation",
+    "evidence:interview-correction",
+    "evidence:interview-procurement",
+    "evidence:public-category",
+    "evidence:public-category-v2",
+    "evidence:public-product"
+  ],
+  "record_ids": [
+    "record:crm-opportunity-001",
+    "record:crm-opportunity-002",
+    "record:interview-correction",
+    "record:interview-segment-001",
+    "record:public-profile-v1",
+    "record:public-profile-v2"
+  ],
+  "event_ids": [
+    "event:interview-001",
+    "event:opportunity-discovery",
+    "event:opportunity-validation",
+    "event:public-profile-observed"
+  ],
+  "run_ids": [
+    "run:northstar:001",
+    "run:northstar:002",
+    "run:northstar:003"
+  ],
+  "relation_ids": [
+    "relation:account-has-opportunity",
+    "relation:northstar-offers-orbit"
+  ],
+  "created_at": "2026-07-01T01:00:00+00:00",
+  "content_hash": "sha256:75c1cd2923060cbca65b96c18c63b10bc73b102ab1ab6e51320f413af9ec72c0"
+}

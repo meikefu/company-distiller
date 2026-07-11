@@ -1,0 +1,5 @@
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"company","external_ids":{},"id":"company:northstar-industries","name":"Northstar Industries","parent_id":null,"policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"legal_entity","external_ids":{},"id":"legal_entity:northstar-holdings","name":"Northstar Industries 控股有限公司","parent_id":"company:northstar-industries","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"business_unit","external_ids":{},"id":"business_unit:northstar-software","name":"Northstar 软件业务单元","parent_id":"company:northstar-industries","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"product","external_ids":{},"id":"product:orbit-ops","name":"OrbitOps","parent_id":"company:northstar-industries","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"market","external_ids":{},"id":"market:industrial-operations","name":"工业运营团队","parent_id":null,"policy_id":"policy:public","scope":"company"}

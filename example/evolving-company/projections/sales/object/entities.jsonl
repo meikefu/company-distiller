@@ -1,0 +1,4 @@
+{"aliases":[],"created_by_run":"run:northstar:002","entity_type":"account","external_ids":{},"id":"account:northstar-crm","name":"Northstar CRM 客户","parent_id":null,"policy_id":"policy:confidential-sales","scope":"commercial_relationship"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"company","external_ids":{},"id":"company:northstar-industries","name":"Northstar Industries","parent_id":null,"policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:northstar:002","entity_type":"opportunity","external_ids":{},"id":"opportunity:orbit-security","name":"OrbitOps 安全项目商机","parent_id":"account:northstar-crm","policy_id":"policy:confidential-sales","scope":"commercial_relationship"}
+{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"product","external_ids":{},"id":"product:orbit-ops","name":"OrbitOps","parent_id":"company:northstar-industries","policy_id":"policy:public","scope":"company"}

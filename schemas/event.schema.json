@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "event.schema.json",
+  "title": "公司对象事件",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "event_type", "subject_ids", "occurred_at", "observed_at", "source_ids", "record_ids", "data", "policy_id", "created_by_run"],
+  "properties": {
+    "id": {"type": "string"},
+    "event_type": {"enum": ["company_update", "opportunity_stage_changed", "interview_conducted", "contract_signed", "contract_renewed", "contract_terminated", "ticket_opened", "ticket_resolved", "usage_observed", "claim_reviewed"]},
+    "subject_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "record_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "data": {"type": "object"},
+    "policy_id": {"type": "string"},
+    "created_by_run": {"type": "string"}
+  }
+}

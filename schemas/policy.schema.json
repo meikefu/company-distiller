@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "policy.schema.json",
+  "title": "公司对象治理策略",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "classification_order", "audiences", "policies"],
+  "properties": {
+    "version": {"type": "string"},
+    "classification_order": {"const": ["public", "internal", "confidential", "restricted"]},
+    "audiences": {"const": ["public", "sales", "customer-success", "executive"]},
+    "policies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "classification", "allowed_audiences", "allowed_purposes", "contains_personal_data", "retention_days", "export_locator"],
+        "properties": {
+          "id": {"type": "string"},
+          "classification": {"enum": ["public", "internal", "confidential", "restricted"]},
+          "allowed_audiences": {"type": "array", "items": {"enum": ["public", "sales", "customer-success", "executive"]}, "uniqueItems": true},
+          "allowed_purposes": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+          "contains_personal_data": {"type": "boolean"},
+          "retention_days": {"type": ["integer", "null"], "minimum": 1},
+          "export_locator": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}

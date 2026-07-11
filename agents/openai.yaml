@@ -1,0 +1,4 @@
+interface:
+  display_name: "公司蒸馏器"
+  short_description: "将多源企业数据蒸馏为可持续更新、可追溯且受治理的公司对象"
+  default_prompt: "使用 $company-distiller 构建或增量更新受治理的公司对象，并导出符合受众权限的公司 Skill。"
