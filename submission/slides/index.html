@@ -1,0 +1,1549 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Company Distiller - AI 创新产品答辩</title>
+  <style>
+    :root {
+      --canvas: #ffffff;
+      --page: #f1f2f2;
+      --ink: #101112;
+      --muted: #5f646b;
+      --panel: #ededeb;
+      --panel-strong: #dfe2e3;
+      --rule: #b9bdc1;
+      --accent: #64c7eb;
+      --accent-strong: #2f7df6;
+      --green: #159a68;
+      --red: #d9584f;
+      --amber: #c98500;
+      --code: #16191c;
+      --code-muted: #aeb7bf;
+      --slide-w: 1280;
+      --slide-h: 720;
+      --scale: 1;
+      font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--page);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--page);
+    }
+
+    body {
+      letter-spacing: 0;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button,
+    a { font: inherit; }
+
+    button:focus-visible,
+    .overview-thumb:focus-visible {
+      outline: 3px solid var(--accent-strong);
+      outline-offset: 3px;
+    }
+
+    #viewport {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: var(--page);
+    }
+
+    #stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: calc(var(--slide-w) * 1px);
+      height: calc(var(--slide-h) * 1px);
+      transform: translate(-50%, -50%) scale(var(--scale));
+      transform-origin: center;
+      background: var(--canvas);
+      box-shadow: 0 20px 70px rgba(20, 23, 26, 0.18);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 1280px;
+      height: 720px;
+      padding: 38px 42px 30px;
+      overflow: hidden;
+      background: var(--canvas);
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .slide.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      animation: slide-in 220ms ease-out;
+    }
+
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-number {
+      position: absolute;
+      right: 42px;
+      bottom: 22px;
+      color: #777d82;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .slide-kicker {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p { margin: 0; }
+
+    h1 {
+      max-width: 610px;
+      font-size: 76px;
+      font-weight: 680;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      width: 1188px;
+      margin: 0;
+      font-size: 42px;
+      font-weight: 660;
+      line-height: 1.08;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    h3 {
+      font-size: 25px;
+      font-weight: 650;
+      line-height: 1.2;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.48;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .source-line {
+      position: absolute;
+      left: 42px;
+      right: 80px;
+      bottom: 20px;
+      color: #6b7075;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .accent-rule {
+      width: 84px;
+      height: 7px;
+      margin: 20px 0 28px;
+      background: var(--accent-strong);
+    }
+
+    .cover {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 42px;
+      align-items: stretch;
+      padding: 32px 32px 30px 42px;
+    }
+
+    .slide.cover.active { display: grid; }
+
+    .cover-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px 0 4px;
+    }
+
+    .cover .slide-kicker {
+      margin-bottom: 70px;
+      color: var(--accent-strong);
+    }
+
+    .cover-subtitle {
+      max-width: 555px;
+      margin-top: 28px;
+      color: #363a3e;
+      font-size: 28px;
+      font-weight: 520;
+      line-height: 1.38;
+    }
+
+    .cover-meta {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 14px 24px;
+      align-items: baseline;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .cover-meta strong {
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 640;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      background: #eaf5fb;
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-visual .asset-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 42px;
+      background: #eaf5fb;
+    }
+
+    .hero-visual.asset-missing .asset-fallback { display: block; }
+
+    .hero-visual.asset-missing img { display: none; }
+
+    .fallback-ledger {
+      height: 100%;
+      padding: 30px;
+      border: 1px solid #9fb3bd;
+      background: rgba(255,255,255,0.78);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #1b2328;
+    }
+
+    .fallback-ledger b {
+      display: block;
+      margin-bottom: 36px;
+      font-family: inherit;
+      font-size: 17px;
+    }
+
+    .fallback-ledger span {
+      display: block;
+      margin: 19px 0;
+      color: #314b59;
+      font-size: 20px;
+    }
+
+    .hero-label {
+      position: absolute;
+      right: 18px;
+      bottom: 16px;
+      padding: 8px 10px;
+      border: 1px solid rgba(16,17,18,0.24);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.9);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .problem-layout {
+      display: grid;
+      grid-template-columns: 310px 300px 1fr;
+      gap: 38px;
+      height: 420px;
+      margin-top: 54px;
+      align-items: center;
+    }
+
+    .source-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 26px;
+      padding-right: 18px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .source-item {
+      position: relative;
+      min-height: 58px;
+      padding: 9px 0 9px 18px;
+      border-top: 1px solid var(--rule);
+      color: #303438;
+      font-size: 22px;
+      font-weight: 590;
+    }
+
+    .source-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 17px;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-strong);
+    }
+
+    .problem-center {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 250px;
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .problem-center::before,
+    .problem-center::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 39px;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .problem-center::before { left: -39px; }
+    .problem-center::after { right: -39px; }
+
+    .problem-center strong {
+      display: block;
+      font-size: 32px;
+      line-height: 1.24;
+    }
+
+    .problem-center span {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .gap-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 30px;
+    }
+
+    .gap-item {
+      padding-top: 14px;
+      border-top: 4px solid var(--red);
+    }
+
+    .gap-item strong {
+      display: block;
+      font-size: 28px;
+    }
+
+    .gap-item span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.4;
+    }
+
+    .misconceptions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 28px;
+      margin-top: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+      font-size: 20px;
+      font-weight: 590;
+    }
+
+    .misconceptions b {
+      color: var(--red);
+      font-size: 25px;
+    }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: 200px 240px 250px 220px 1fr;
+      gap: 0;
+      height: 410px;
+      margin-top: 65px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .arch-stage {
+      position: relative;
+      padding: 28px 22px 20px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .arch-stage:last-child { border-right: 0; }
+
+    .arch-stage:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      z-index: 2;
+      width: 30px;
+      height: 30px;
+      color: var(--ink);
+      background: var(--canvas);
+      font-size: 25px;
+      line-height: 28px;
+      text-align: center;
+    }
+
+    .arch-stage.ai { background: #eaf5fb; }
+    .arch-stage.rules { background: #f0f0ee; }
+    .arch-stage.object { background: #eef7f3; }
+
+    .arch-index {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .arch-stage h3 { margin-top: 22px; }
+
+    .arch-stage ul {
+      margin: 30px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .arch-stage li {
+      margin: 17px 0;
+      color: #34383c;
+      font-size: 18px;
+      line-height: 1.32;
+    }
+
+    .arch-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .arch-note strong { color: var(--ink); }
+
+    .claim-layout {
+      display: grid;
+      grid-template-columns: 710px 1fr;
+      gap: 48px;
+      height: 490px;
+      margin-top: 52px;
+    }
+
+    .claim-code {
+      position: relative;
+      padding: 34px 36px 28px;
+      overflow: hidden;
+      border-radius: 6px;
+      background: var(--code);
+      color: #f5f7f8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 17px;
+      line-height: 1.72;
+    }
+
+    .claim-code .comment { color: #7f8c95; }
+    .claim-code .key { color: #8fd7f2; }
+    .claim-code .value { color: #f4cf78; }
+    .claim-code .accepted { color: #70d8aa; }
+
+    .claim-id {
+      position: absolute;
+      top: 17px;
+      right: 20px;
+      color: var(--code-muted);
+      font-size: 12px;
+    }
+
+    .claim-rail {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4px 0;
+    }
+
+    .claim-equation {
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--rule);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .claim-equation b { color: var(--accent-strong); }
+
+    .claim-callout {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .claim-callout:last-of-type { border-bottom: 0; }
+
+    .claim-callout strong {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .claim-callout span {
+      font-size: 19px;
+      font-weight: 560;
+    }
+
+    .claim-warning {
+      padding: 16px 18px;
+      border-left: 6px solid var(--amber);
+      background: #fbf4df;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 54px;
+      height: 430px;
+      margin-top: 72px;
+      padding-top: 72px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 85px;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .run {
+      position: relative;
+      padding-top: 40px;
+    }
+
+    .run::before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 5px solid var(--canvas);
+      border-radius: 50%;
+      background: var(--ink);
+      box-shadow: 0 0 0 1px var(--ink);
+    }
+
+    .run:last-child::before { background: var(--accent-strong); }
+
+    .run-label {
+      position: absolute;
+      top: -38px;
+      left: 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .run h3 { margin-bottom: 22px; }
+
+    .run p {
+      margin: 13px 0;
+      color: #33383c;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .change {
+      display: inline-block;
+      margin-right: 7px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .change.superseded { color: var(--accent-strong); }
+    .change.retracted { color: var(--green); }
+    .change.conflicted { color: var(--red); }
+    .change.proposed { color: var(--amber); }
+
+    .timeline-legend {
+      display: flex;
+      gap: 28px;
+      margin-top: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .views {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      height: 470px;
+      margin-top: 55px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .view {
+      position: relative;
+      padding: 30px 28px 24px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .view:last-child { border-right: 0; }
+
+    .view .audience {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .view h3 {
+      margin: 18px 0 30px;
+      font-size: 28px;
+    }
+
+    .view .count {
+      margin: 0 0 26px;
+      font-size: 54px;
+      font-weight: 660;
+      line-height: 1;
+    }
+
+    .view .count span {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .view p {
+      margin: 17px 0;
+      color: #303438;
+      font-size: 18px;
+      line-height: 1.38;
+    }
+
+    .view .visibility {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 24px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .views-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .evidence-layout {
+      display: grid;
+      grid-template-columns: 430px 1fr;
+      gap: 56px;
+      height: 455px;
+      margin-top: 58px;
+    }
+
+    .proof-number {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 12px 30px 12px 0;
+      border-right: 1px solid var(--rule);
+    }
+
+    .proof-number strong {
+      color: var(--accent-strong);
+      font-size: 116px;
+      font-weight: 700;
+      line-height: 0.9;
+    }
+
+    .proof-number span {
+      margin-top: 18px;
+      font-size: 27px;
+      font-weight: 620;
+    }
+
+    .proof-number small {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 38px;
+      align-content: start;
+    }
+
+    .proof-item {
+      min-height: 116px;
+      padding: 18px 0 16px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .proof-item strong {
+      display: block;
+      font-size: 38px;
+      line-height: 1;
+    }
+
+    .proof-item span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .truth-bar {
+      grid-column: 1 / -1;
+      align-self: end;
+      padding: 18px 24px;
+      border-left: 7px solid var(--red);
+      background: var(--ink);
+      color: #fff;
+      font-size: 19px;
+      line-height: 1.4;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      height: 375px;
+      margin-top: 78px;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .roadmap-step {
+      position: relative;
+      padding: 32px 34px 26px 0;
+      border-right: 1px solid var(--rule);
+    }
+
+    .roadmap-step + .roadmap-step { padding-left: 34px; }
+    .roadmap-step:last-child { border-right: 0; }
+
+    .roadmap-step .step-no {
+      color: var(--accent-strong);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .roadmap-step h3 {
+      margin: 20px 0 26px;
+      font-size: 29px;
+    }
+
+    .roadmap-step p {
+      margin: 13px 0;
+      color: #32363a;
+      font-size: 18px;
+      line-height: 1.42;
+    }
+
+    .closing-line {
+      margin-top: 28px;
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 620;
+      line-height: 1.35;
+    }
+
+    .closing-line b { color: var(--accent-strong); }
+
+    #progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 50;
+      width: 0;
+      height: 4px;
+      background: var(--accent-strong);
+      transition: width 180ms ease;
+    }
+
+    #chrome {
+      position: fixed;
+      right: 18px;
+      bottom: 16px;
+      z-index: 110;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      opacity: 0.22;
+      transition: opacity 150ms ease;
+    }
+
+    #chrome:hover,
+    #chrome:focus-within { opacity: 1; }
+
+    body.chrome-hidden #chrome {
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    #chrome button {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border: 1px solid #aeb3b7;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.94);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    #counter {
+      min-width: 58px;
+      padding: 8px 10px;
+      border: 1px solid #aeb3b7;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.94);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    #notes-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 55;
+      display: none;
+      width: 390px;
+      padding: 30px 28px;
+      overflow: auto;
+      border-left: 1px solid var(--rule);
+      background: #f7f7f5;
+      color: var(--ink);
+    }
+
+    body.notes-open #notes-panel { display: block; }
+
+    body.notes-open #chrome { right: 408px; }
+
+    #notes-panel header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    #notes-title {
+      font-size: 20px;
+      font-weight: 650;
+    }
+
+    #timer {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+    }
+
+    #notes-content {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    #notes-content p { margin: 0 0 18px; }
+
+    #notes-content .notes-sources {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .speaker-notes { display: none; }
+
+    #overview {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      overflow: auto;
+      padding: 42px;
+      background: #e9ebeb;
+    }
+
+    #overview.open { display: block; }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .overview-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(20,23,26,0.12);
+      cursor: pointer;
+    }
+
+    .overview-thumb.current { border-color: var(--accent-strong); }
+
+    .overview-thumb .slide {
+      display: block !important;
+      opacity: 1 !important;
+      transform: scale(0.25) !important;
+      transform-origin: top left;
+      animation: none !important;
+    }
+
+    .overview-label {
+      position: absolute;
+      right: 8px;
+      bottom: 7px;
+      z-index: 4;
+      padding: 4px 7px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.9);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    @media (max-width: 720px) {
+      #notes-panel {
+        width: 100%;
+        padding: 24px 22px 84px;
+      }
+
+      body.notes-open #chrome { right: 18px; }
+
+      #overview { padding: 24px 16px 76px; }
+
+      .overview-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .slide.active { animation: none; }
+      #progress { transition: none; }
+    }
+
+    @media print {
+      @page { size: 13.333in 7.5in; margin: 0; }
+      html,
+      body {
+        width: auto;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+      }
+      #viewport { position: static; overflow: visible; }
+      #stage {
+        position: static;
+        width: 1280px;
+        height: auto;
+        transform: none;
+        box-shadow: none;
+      }
+      .slide {
+        position: relative;
+        display: block;
+        opacity: 1;
+        transform: none;
+        page-break-after: always;
+      }
+      #progress,
+      #chrome,
+      #notes-panel,
+      #overview { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="progress" aria-hidden="true"></div>
+  <main id="viewport" aria-live="polite">
+    <div id="stage">
+      <section class="slide cover active" data-title="Company Distiller">
+        <div class="cover-copy">
+          <div>
+            <p class="slide-kicker">AI 创新产品 · 销售智胜 · 原子 Skill</p>
+            <h1>Company<br>Distiller</h1>
+            <div class="accent-rule"></div>
+            <p class="cover-subtitle">让每条客户结论都说清：<br>从哪来、何时成立、为何变化、谁能看</p>
+          </div>
+          <div class="cover-meta">
+            <strong>产品形态</strong><span>企业客户经营认知持续蒸馏 Skill</span>
+            <strong>当前阶段</strong><span>可运行参考原型 · 合成演示数据</span>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <img src="assets/evidence-system.png" alt="Company Distiller 版本化证据系统视觉，展示 Claim、Evidence、Run 和 Snapshot 之间的关系">
+          <div class="asset-fallback" aria-hidden="true">
+            <div class="fallback-ledger">
+              <b>VERSIONED COMPANY OBJECT</b>
+              <span>CLAIM / opportunity_stage</span>
+              <span>EVIDENCE / crm-validation</span>
+              <span>TIME / valid + observed</span>
+              <span>RUN / 001 → 002 → 003</span>
+              <span>PROJECTION / audience × purpose</span>
+            </div>
+          </div>
+          <figcaption class="hero-label">版本化公司对象 · snapshot:northstar:003</figcaption>
+        </figure>
+        <span class="slide-number">01</span>
+        <template class="speaker-notes">
+          <p>大家好，我的作品是 Company Distiller，申报销售智胜赛道和原子 Skill 路线。它面向大客户经理在拜访和账户复盘前的单客认知整理，把公开资料、CRM、访谈、合同、工单和产品使用数据沉淀为可追溯、可更新、按受众交付的公司对象。</p>
+          <p>我没有再做一份会过期的企业摘要，而是让每条客户结论都知道自己从哪里来、什么时候成立、为什么改变、谁可以看。</p>
+          <div class="notes-sources">[Sources]<br>项目 README、SKILL.md；技术验收基线 5d5043f。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="可信的当前认知">
+        <p class="slide-kicker">01 · 真问题</p>
+        <h2>客户经理缺的不是更多信息，而是可信的当前认知</h2>
+        <div class="problem-layout">
+          <div class="source-stack" aria-label="六类企业数据来源">
+            <div class="source-item">公开资料</div>
+            <div class="source-item">CRM</div>
+            <div class="source-item">访谈</div>
+            <div class="source-item">合同</div>
+            <div class="source-item">工单</div>
+            <div class="source-item">产品使用</div>
+          </div>
+          <div class="problem-center">
+            <div>
+              <strong>拜访准备<br>账户复盘</strong>
+              <span>一份静态摘要</span>
+            </div>
+          </div>
+          <div class="gap-list">
+            <div class="gap-item"><strong>来源断裂</strong><span>结论无法定位到证据</span></div>
+            <div class="gap-item"><strong>时间混淆</strong><span>“当前”可能早已过期</span></div>
+            <div class="gap-item"><strong>冲突抹平</strong><span>新旧说法被静默合并</span></div>
+            <div class="gap-item"><strong>受众越界</strong><span>内部信息被复制扩散</span></div>
+          </div>
+        </div>
+        <div class="misconceptions">
+          <span>CRM 阶段 <b>≠</b> 客户意愿</span>
+          <span>合同义务 <b>≠</b> 实际采用</span>
+          <span>产品使用量 <b>≠</b> 满意度</span>
+        </div>
+        <p class="source-line">合成演示情境；当前尚缺实际客户经理访谈与真实流程计时。</p>
+        <span class="slide-number">02</span>
+        <template class="speaker-notes">
+          <p>客户经理在拜访或账户复盘前，通常需要把六类材料拼在一起。难点不只是找资料，而是判断哪些信息能采信、是否仍有效、冲突是否解决，以及能否交付给当前受众。</p>
+          <p>这里必须坦诚：当前问题模型已经在原型中实现，但还没有真实用户访谈和现行流程基线。后续至少用一位真实客户经理和一个匿名账户完成同输入对照。</p>
+          <div class="notes-sources">[Sources]<br>references/system-architecture.md；submission/ai-innovation-product-spec.md。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="AI 与规则分工">
+        <p class="slide-kicker">02 · 真工具</p>
+        <h2>AI 理解语义，规则决定什么能成为知识</h2>
+        <div class="architecture">
+          <div class="arch-stage">
+            <span class="arch-index">INPUT</span>
+            <h3>六类数据</h3>
+            <ul>
+              <li>非结构化材料</li>
+              <li>结构化业务记录</li>
+              <li>版本与治理上下文</li>
+            </ul>
+          </div>
+          <div class="arch-stage ai">
+            <span class="arch-index">AI</span>
+            <h3>语义候选</h3>
+            <ul>
+              <li>实体与边界识别</li>
+              <li>Claim / 关系抽取</li>
+              <li>冲突与更新候选</li>
+            </ul>
+          </div>
+          <div class="arch-stage rules">
+            <span class="arch-index">DETERMINISTIC</span>
+            <h3>确定性治理</h3>
+            <ul>
+              <li>Schema 与引用闭合</li>
+              <li>双时间与生命周期</li>
+              <li>策略继承与快照</li>
+            </ul>
+          </div>
+          <div class="arch-stage object">
+            <span class="arch-index">CANONICAL</span>
+            <h3>公司对象</h3>
+            <ul>
+              <li>追加式账本</li>
+              <li>不可变 Snapshot</li>
+              <li>确定性重放</li>
+            </ul>
+          </div>
+          <div class="arch-stage">
+            <span class="arch-index">DELIVERY</span>
+            <h3>受众投影</h3>
+            <ul>
+              <li>public</li>
+              <li>sales / CS</li>
+              <li>executive</li>
+            </ul>
+          </div>
+        </div>
+        <p class="arch-note"><strong>AI 由 Codex Skill 宿主执行。</strong> Fixture 用于确定性回归，不冒充模型输出。</p>
+        <span class="slide-number">03</span>
+        <template class="speaker-notes">
+          <p>AI 不是外壳。它负责无法靠枚举规则完成的语义理解，包括主体边界、原子 Claim、关系和冲突候选。确定性程序不相信自由文本，负责 Schema、证据、双时间、策略、生命周期和最终写入。</p>
+          <p>当前 AI 调用由 Codex Skill 宿主执行，仓库脚本没有独立模型 API。现场最好展示一次真实的 $company-distiller 运行记录，避免评委把 fixture 流水线误判为全部产品。</p>
+          <div class="notes-sources">[Sources]<br>prompts/company_analyzer.md；prompts/evidence_merger.md；SKILL.md。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="Claim 语义内核">
+        <p class="slide-kicker">03 · 核心技术</p>
+        <h2>报告会过期；Claim 可以被验证、更新和撤回</h2>
+        <div class="claim-layout">
+          <pre class="claim-code"><span class="claim-id">claim:opportunity-stage-validation</span><code><span class="comment">// CRM 阶段只是卖方观察</span>
+{
+  <span class="key">"subject_id"</span>: <span class="value">"opportunity:orbit-security"</span>,
+  <span class="key">"predicate"</span>: <span class="value">"opportunity_stage"</span>,
+  <span class="key">"value"</span>: <span class="value">"验证阶段（validation）"</span>,
+  <span class="key">"claim_type"</span>: <span class="accepted">"observation"</span>,
+  <span class="key">"decision"</span>: <span class="accepted">"accepted"</span>,
+  <span class="key">"valid_from"</span>: <span class="value">"2026-06-30"</span>,
+  <span class="key">"observed_at"</span>: <span class="value">"2026-07-01"</span>,
+  <span class="key">"evidence_ids"</span>: [<span class="value">"crm-validation"</span>],
+  <span class="key">"supersedes"</span>: [<span class="value">"...discovery"</span>],
+  <span class="key">"policy_id"</span>: <span class="value">"confidential-sales"</span>
+}</code></pre>
+          <div class="claim-rail">
+            <p class="claim-equation"><b>Claim</b> = 主体 + 谓词 + 值 + 证据 + 双时间 + 策略 + 生命周期</p>
+            <div class="claim-callout"><strong>认识类型</strong><span>observation，不是客户意愿</span></div>
+            <div class="claim-callout"><strong>双时间</strong><span>有效于 06-30，观察于 07-01</span></div>
+            <div class="claim-callout"><strong>生命周期</strong><span>显式替代 discovery，历史仍保留</span></div>
+            <div class="claim-callout"><strong>受众边界</strong><span>仅进入获授权 sales 投影</span></div>
+            <p class="claim-warning">“高使用量可能意味着满意度”只保留为 proposed hypothesis，不进入当前快照。</p>
+          </div>
+        </div>
+        <p class="source-line">证据：合成样例 claims.jsonl；字段为真实项目 Schema。</p>
+        <span class="slide-number">04</span>
+        <template class="speaker-notes">
+          <p>Claim 是整个系统的最小知识单元。以 CRM 商机阶段为例，它的类型是 observation，同时记录业务有效时间和系统观察时间；它显式替代早期 discovery，但不会删除历史；策略决定它只能进入销售视图。</p>
+          <p>这让 AI 不能把“看起来合理”直接写成事实。例如使用量推导满意度只有弱证据，所以保持 proposed hypothesis，不发布。</p>
+          <div class="notes-sources">[Sources]<br>example/evolving-company/company-object/claims/claims.jsonl；schemas/claim.schema.json。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="三轮认知演进">
+        <p class="slide-kicker">04 · 多轮蒸馏</p>
+        <h2>新知识改变当前认知，但不会抹掉历史</h2>
+        <div class="timeline">
+          <article class="run">
+            <span class="run-label">RUN 001 · INITIAL</span>
+            <h3>公开资料</h3>
+            <p>建立公司与产品边界</p>
+            <p><span class="change">NEW</span>工业运营软件</p>
+            <p><span class="change">NEW</span>高韧性平台定位</p>
+          </article>
+          <article class="run">
+            <span class="run-label">RUN 002 · INCREMENTAL</span>
+            <h3>CRM + 访谈</h3>
+            <p><span class="change">REINFORCED</span>公司类别获新证据</p>
+            <p><span class="change">NEW</span>商机 discovery</p>
+            <p><span class="change">NEW</span>集中采购陈述</p>
+          </article>
+          <article class="run">
+            <span class="run-label">RUN 003 · INCREMENTAL</span>
+            <h3>合同 + 工单 + 使用</h3>
+            <p><span class="change superseded">SUPERSEDED</span>discovery → validation</p>
+            <p><span class="change retracted">RETRACTED</span>集中采购陈述撤回</p>
+            <p><span class="change conflicted">CONFLICTED</span>高韧性 ↔ SEV-1</p>
+            <p><span class="change proposed">PROPOSED</span>使用量 → 满意度，未发布</p>
+          </article>
+        </div>
+        <div class="timeline-legend">
+          <span>3 次运行</span><span>3 个快照</span><span>parent_snapshot_id 串成演进链</span><span>旧账本逐字节保留</span>
+        </div>
+        <p class="source-line">Northstar Industries 为完全合成企业；变化字段来自 changes/index.jsonl。</p>
+        <span class="slide-number">05</span>
+        <template class="speaker-notes">
+          <p>第一轮只有公开资料；第二轮加入 CRM 和访谈；第三轮加入合同、工单和使用数据。核心不是“又生成了一份报告”，而是显式记录了强化、替代、撤回、冲突以及不发布。</p>
+          <p>现场重点展示四条变化：discovery 被 validation 替代；采购陈述撤回；高韧性定位与 SEV-1 保持冲突；使用量推导满意度没有进入快照。</p>
+          <div class="notes-sources">[Sources]<br>example/evolving-company/company-object/changes/index.jsonl；snapshots/index.jsonl。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="四类受众投影">
+        <p class="slide-kicker">05 · 受控交付</p>
+        <h2>同一快照，按角色交付不同事实</h2>
+        <div class="views">
+          <article class="view">
+            <span class="audience">public · research</span>
+            <h3>公众</h3>
+            <p class="count">2 <span>当前 Claim</span></p>
+            <p>公司类别与产品定位</p>
+            <p>内部商业 Claim 不可见</p>
+            <p>提示存在 1 个被遮蔽冲突</p>
+            <span class="visibility">最小公开视图</span>
+          </article>
+          <article class="view">
+            <span class="audience">sales · account-planning</span>
+            <h3>销售</h3>
+            <p class="count">3 <span>当前 Claim</span></p>
+            <p>商机 validation 阶段</p>
+            <p>可见采购陈述撤回</p>
+            <p>合同义务仍不可见</p>
+            <span class="visibility">账户规划视图</span>
+          </article>
+          <article class="view">
+            <span class="audience">customer-success</span>
+            <h3>客户成功</h3>
+            <p class="count">4 <span>当前 Claim</span></p>
+            <p>37 个周活跃站点</p>
+            <p>SEV-1 与定位冲突</p>
+            <p>不包含合同金额</p>
+            <span class="visibility">产品使用与服务视图</span>
+          </article>
+          <article class="view">
+            <span class="audience">executive · review</span>
+            <h3>管理层</h3>
+            <p class="count">6 <span>当前 Claim</span></p>
+            <p>合同义务与商机阶段</p>
+            <p>完整冲突与撤回记录</p>
+            <p>覆盖全部四类关系</p>
+            <span class="visibility">受限管理复盘视图</span>
+          </article>
+        </div>
+        <p class="views-note">共同基线：snapshot:northstar:003 · 语义策略过滤 ≠ 身份认证 / 系统访问控制</p>
+        <span class="slide-number">06</span>
+        <template class="speaker-notes">
+          <p>这四份视图来自同一个 snapshot，不是四次随机改写。公众看不到内部商业信息，销售看到商机阶段，客户成功看到使用与服务信号，管理层才能看到合同义务和完整冲突。</p>
+          <p>投影不复制原始 CRM、合同、工单和遥测载荷。但当前只是语义策略过滤，不是操作系统级访问控制，生产环境仍需身份认证、加密和租户隔离。</p>
+          <div class="notes-sources">[Sources]<br>example/evolving-company/projections/*/projection.json；各 facts/*.md。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="可复现工程证据">
+        <p class="slide-kicker">06 · 真数据</p>
+        <h2>今天能证明原型可复现，还不能证明业务收益</h2>
+        <div class="evidence-layout">
+          <div class="proof-number">
+            <strong>16/16</strong>
+            <span>发布门禁通过</span>
+            <small>覆盖 Schema、证据闭环、双时间、增量基线、生命周期、策略隔离与确定性重放。</small>
+          </div>
+          <div class="proof-grid">
+            <div class="proof-item"><strong>5/5</strong><span>单元与集成测试</span></div>
+            <div class="proof-item"><strong>15</strong><span>机器可读 Schema</span></div>
+            <div class="proof-item"><strong>3 · 3 · 4</strong><span>运行 · 快照 · 受众投影</span></div>
+            <div class="proof-item"><strong>6</strong><span>知识变化语义全部覆盖</span></div>
+            <div class="proof-item"><strong>2×</strong><span>全新重放哈希一致</span></div>
+            <div class="proof-item"><strong>0</strong><span>固定测试哨兵误入未授权视图</span></div>
+          </div>
+          <div class="truth-bar">尚未证明：单客整理耗时、模型抽取准确率、赢单率。全部工程结果基于合成样例。</div>
+        </div>
+        <p class="source-line">验收基线：commit 5d5043f · acceptance-report.json · 2026-08-14 复验。</p>
+        <span class="slide-number">07</span>
+        <template class="speaker-notes">
+          <p>我不把一段成功演示当作质量证明，所以发布条件被做成 16 项可执行门禁；5 项测试全部通过，15 个 Schema 可解析，三轮运行和四类投影可从零重建，两次全新重放哈希一致。</p>
+          <p>这些只证明结构、引用、状态、策略和确定性。它们不证明模型抽取质量，也不证明节省工时或提升赢单率。0.13 秒与 1.19 秒只是不含模型推理和人工审核的本地技术时长，不作为本页大指标。</p>
+          <div class="notes-sources">[Sources]<br>example/evolving-company/acceptance-report.json；references/evaluation-rubric.md。</div>
+        </template>
+      </section>
+
+      <section class="slide" data-title="进入真实账户验证">
+        <p class="slide-kicker">07 · 下一关</p>
+        <h2>下一关：用匿名真实账户验证业务价值</h2>
+        <div class="roadmap">
+          <article class="roadmap-step">
+            <span class="step-no">NOW · 已完成</span>
+            <h3>可运行语义内核</h3>
+            <p>多源企业本体与 Claim 契约</p>
+            <p>增量运行、快照与四类投影</p>
+            <p>16 项确定性发布门禁</p>
+          </article>
+          <article class="roadmap-step">
+            <span class="step-no">VALIDATE · 必须补齐</span>
+            <h3>匿名真实试测</h3>
+            <p><strong>n=1</strong> 同输入探索性对照</p>
+            <p>扩展到 <strong>n≥10</strong> 匿名账户</p>
+            <p>中位耗时 · 准确率 · 可追溯率 · 误投影数</p>
+          </article>
+          <article class="roadmap-step">
+            <span class="step-no">PRODUCTIZE · 产品化</span>
+            <h3>接入与运营闭环</h3>
+            <p>连接器与人工候选审核</p>
+            <p>事务账本与策略版本化</p>
+            <p>认证、加密、租户隔离与审计</p>
+          </article>
+        </div>
+        <p class="closing-line">让 AI 对每个结论的<b>来源、时间、变化和可见范围</b>负责。</p>
+        <p class="source-line">建议决策：进入匿名真实账户验证，而不是继续堆叠工程指标。</p>
+        <span class="slide-number">08</span>
+        <template class="speaker-notes">
+          <p>Company Distiller 当前已经是可运行参考原型，但下一步最重要的不是再增加工程指标，而是用真实账户验证业务价值。最低从一个匿名账户和一位真实目标用户开始，明确标注 n=1；随后扩展到不少于十个账户。</p>
+          <p>产品化还需要连接器、审核流、事务数据库和完整安全基础设施。最终目标不是让 AI 更大胆地下结论，而是让它对每个结论的来源、时间、变化和可见范围负责。</p>
+          <div class="notes-sources">[Sources]<br>submission/ai-innovation-product-spec.md；references/high-level-design.md。</div>
+        </template>
+      </section>
+    </div>
+  </main>
+
+  <aside id="notes-panel" aria-label="演讲者备注">
+    <header><span id="notes-title">演讲者备注</span><span id="timer">00:00</span></header>
+    <div id="notes-content"></div>
+  </aside>
+
+  <nav id="chrome" aria-label="演示控制">
+    <button id="prev" type="button" aria-label="上一页" title="上一页">←</button>
+    <span id="counter" aria-live="polite">1 / 8</span>
+    <button id="next" type="button" aria-label="下一页" title="下一页">→</button>
+    <button id="overview-btn" type="button" aria-label="总览" title="总览">▦</button>
+    <button id="notes-btn" type="button" aria-label="演讲者备注" title="演讲者备注">≡</button>
+    <button id="fullscreen-btn" type="button" aria-label="全屏" title="全屏">⛶</button>
+  </nav>
+
+  <div id="overview" role="dialog" aria-modal="true" aria-label="幻灯片总览">
+    <div class="overview-grid"></div>
+  </div>
+
+  <script>
+    (() => {
+      const slides = Array.from(document.querySelectorAll('#stage > .slide'));
+      const stage = document.getElementById('stage');
+      const viewport = document.getElementById('viewport');
+      const progress = document.getElementById('progress');
+      const counter = document.getElementById('counter');
+      const notesPanel = document.getElementById('notes-panel');
+      const notesContent = document.getElementById('notes-content');
+      const notesTitle = document.getElementById('notes-title');
+      const timer = document.getElementById('timer');
+      const chrome = document.getElementById('chrome');
+      const overview = document.getElementById('overview');
+      const overviewGrid = overview.querySelector('.overview-grid');
+      const heroImage = document.querySelector('.hero-visual img');
+      let index = 0;
+      let startedAt = Date.now();
+      let touchStartX = null;
+      let chromeTimer = null;
+
+      if (heroImage) {
+        const markMissing = () => heroImage.closest('.hero-visual').classList.add('asset-missing');
+        heroImage.addEventListener('error', markMissing);
+        if (heroImage.complete && heroImage.naturalWidth === 0) markMissing();
+      }
+
+      const fromHash = () => {
+        const value = Number.parseInt(location.hash.replace('#', ''), 10);
+        return Number.isFinite(value) ? Math.min(slides.length - 1, Math.max(0, value - 1)) : 0;
+      };
+
+      const fitStage = () => {
+        const notesWidth = document.body.classList.contains('notes-open') ? 390 : 0;
+        const availableWidth = Math.max(320, window.innerWidth - notesWidth);
+        const toolbarReserve = window.innerHeight < 500 ? 48 : 0;
+        const availableHeight = Math.max(240, window.innerHeight - toolbarReserve);
+        const scale = Math.min(availableWidth / 1280, availableHeight / 720);
+        document.documentElement.style.setProperty('--scale', scale.toFixed(5));
+        stage.style.left = `${availableWidth / 2}px`;
+        stage.style.top = `${availableHeight / 2}px`;
+      };
+
+      const updateNotes = () => {
+        const template = slides[index].querySelector('.speaker-notes');
+        notesTitle.textContent = `${String(index + 1).padStart(2, '0')} · ${slides[index].dataset.title}`;
+        notesContent.innerHTML = template ? template.innerHTML : '';
+      };
+
+      const show = (nextIndex, updateHash = true) => {
+        index = Math.min(slides.length - 1, Math.max(0, nextIndex));
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+        counter.textContent = `${index + 1} / ${slides.length}`;
+        progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+        updateNotes();
+        if (updateHash) history.replaceState(null, '', `#${index + 1}`);
+        document.title = `${slides[index].dataset.title} · Company Distiller`;
+      };
+
+      const next = () => show(index + 1);
+      const prev = () => show(index - 1);
+
+      const toggleNotes = () => {
+        document.body.classList.toggle('notes-open');
+        fitStage();
+      };
+
+      const toggleFullscreen = async () => {
+        try {
+          if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+          else await document.exitFullscreen();
+        } catch (_) {}
+      };
+
+      const revealChrome = () => {
+        document.body.classList.remove('chrome-hidden');
+        window.clearTimeout(chromeTimer);
+        chromeTimer = window.setTimeout(() => {
+          if (!chrome.matches(':focus-within')) document.body.classList.add('chrome-hidden');
+        }, 2200);
+      };
+
+      const buildOverview = () => {
+        overviewGrid.innerHTML = '';
+        slides.forEach((slide, i) => {
+          const thumb = document.createElement('button');
+          thumb.type = 'button';
+          thumb.className = `overview-thumb${i === index ? ' current' : ''}`;
+          thumb.setAttribute('aria-label', `跳转到第 ${i + 1} 页：${slide.dataset.title}`);
+          const clone = slide.cloneNode(true);
+          clone.classList.add('active');
+          clone.querySelectorAll('.speaker-notes').forEach(node => node.remove());
+          const label = document.createElement('span');
+          label.className = 'overview-label';
+          label.textContent = `${i + 1} · ${slide.dataset.title}`;
+          thumb.append(clone, label);
+          thumb.addEventListener('click', () => {
+            overview.classList.remove('open');
+            show(i);
+          });
+          overviewGrid.appendChild(thumb);
+        });
+      };
+
+      const toggleOverview = () => {
+        if (overview.classList.contains('open')) overview.classList.remove('open');
+        else {
+          buildOverview();
+          overview.classList.add('open');
+          overviewGrid.querySelector('.current')?.focus();
+        }
+      };
+
+      document.getElementById('prev').addEventListener('click', prev);
+      document.getElementById('next').addEventListener('click', next);
+      document.getElementById('notes-btn').addEventListener('click', toggleNotes);
+      document.getElementById('overview-btn').addEventListener('click', toggleOverview);
+      document.getElementById('fullscreen-btn').addEventListener('click', toggleFullscreen);
+      document.addEventListener('pointermove', revealChrome, { passive: true });
+      document.addEventListener('pointerdown', revealChrome, { passive: true });
+      document.addEventListener('keydown', revealChrome);
+
+      document.addEventListener('keydown', event => {
+        if (event.target.matches('input, textarea, select')) return;
+        if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+          event.preventDefault(); next();
+        } else if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+          event.preventDefault(); prev();
+        } else if (event.key === 'Home') {
+          event.preventDefault(); show(0);
+        } else if (event.key === 'End') {
+          event.preventDefault(); show(slides.length - 1);
+        } else if (event.key.toLowerCase() === 'n') {
+          event.preventDefault(); toggleNotes();
+        } else if (event.key.toLowerCase() === 'o' || event.key === 'Escape' && overview.classList.contains('open')) {
+          event.preventDefault(); toggleOverview();
+        } else if (event.key.toLowerCase() === 'f') {
+          event.preventDefault(); toggleFullscreen();
+        }
+      });
+
+      viewport.addEventListener('touchstart', event => {
+        touchStartX = event.changedTouches[0].clientX;
+      }, { passive: true });
+
+      viewport.addEventListener('touchend', event => {
+        if (touchStartX == null) return;
+        const delta = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 55) delta < 0 ? next() : prev();
+        touchStartX = null;
+      }, { passive: true });
+
+      window.addEventListener('resize', fitStage);
+      window.addEventListener('hashchange', () => show(fromHash(), false));
+      setInterval(() => {
+        const seconds = Math.floor((Date.now() - startedAt) / 1000);
+        timer.textContent = `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+      }, 1000);
+
+      index = fromHash();
+      show(index, false);
+      fitStage();
+      revealChrome();
+    })();
+  </script>
+</body>
+</html>
