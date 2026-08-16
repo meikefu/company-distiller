@@ -1,12 +1,12 @@
 {
-  "id": "projection:northstar-industries:003:customer-success",
-  "company_id": "company:northstar-industries",
-  "snapshot_id": "snapshot:northstar:003",
+  "id": "projection:example-company:003:customer-success",
+  "company_id": "company:example-company",
+  "snapshot_id": "snapshot:example-company:003",
   "audience": "customer-success",
   "purpose": "customer-success",
   "claim_ids": [
     "claim:company-category-v2",
-    "claim:orbit-positioning-v1",
+    "claim:example-product-positioning-v1",
     "claim:sev1-observed",
     "claim:usage-active-sites"
   ],
@@ -14,7 +14,7 @@
     "claim:company-category-v1"
   ],
   "conflict_claim_ids": [
-    "claim:orbit-positioning-v1",
+    "claim:example-product-positioning-v1",
     "claim:sev1-observed"
   ],
   "retraction_claim_ids": [],
@@ -38,14 +38,14 @@
     "event:usage-june"
   ],
   "run_ids": [
-    "run:northstar:001",
-    "run:northstar:002",
-    "run:northstar:003"
+    "run:example-company:001",
+    "run:example-company:002",
+    "run:example-company:003"
   ],
   "relation_ids": [
-    "relation:northstar-offers-orbit",
-    "relation:subscription-uses-orbit"
+    "relation:example-company-offers-example-product",
+    "relation:subscription-uses-example-product"
   ],
   "created_at": "2026-07-01T01:00:00+00:00",
-  "content_hash": "sha256:10b69c631ed9a65eabeb0c5d1b866358d91c4b8f11c94fa9cbb5e192ccb0e83f"
+  "content_hash": "sha256:9c84da8927b67a4dba11da8f52b6111b3b864f7c6bebf2486c5eb974f709d9f1"
 }

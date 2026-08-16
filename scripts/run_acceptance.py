@@ -92,7 +92,7 @@ def make_run_bundle(
     write_jsonl(bundle / "claims.jsonl", claims or [])
     run = {
         "id": run_id,
-        "company_id": "company:northstar-industries",
+        "company_id": "company:example-company",
         "base_snapshot_id": base_snapshot_id,
         "started_at": "2026-07-02T00:00:00+00:00",
         "completed_at": "2026-07-02T00:01:00+00:00",
@@ -208,13 +208,13 @@ def gate_g07(context: dict) -> str:
         duplicate = Path(temp) / "duplicate"
         shutil.copytree(context["output"] / "bundles/run-003-contract-support-usage", duplicate)
         run = read_json(duplicate / "run.json")
-        run["base_snapshot_id"] = "snapshot:northstar:003"
+        run["base_snapshot_id"] = "snapshot:example-company:003"
         write_json(duplicate / "run.json", run)
         update_digest(duplicate)
         expect_rejected_unchanged(workspace, duplicate, "duplicate run id")
 
         stale = Path(temp) / "stale"
-        make_run_bundle(stale, "run:northstar:stale", "snapshot:northstar:001", "snapshot:northstar:stale")
+        make_run_bundle(stale, "run:example-company:stale", "snapshot:example-company:001", "snapshot:example-company:stale")
         expect_rejected_unchanged(workspace, stale, "stale base_snapshot_id")
     require(len(context["state"]["runs"]) == 3 and len(context["state"]["snapshots"]) == 3, "按顺序执行的运行数量不符")
     return "3 次运行均成功应用；重复运行和过期基准运行被拒绝，工作区字节保持不变"
@@ -223,7 +223,7 @@ def gate_g07(context: dict) -> str:
 def gate_g08(context: dict) -> str:
     with tempfile.TemporaryDirectory() as temp:
         workspace = Path(temp) / "object"
-        scaffold("Northstar Industries", "northstar-industries", workspace, "2026-01-15")
+        scaffold("Example Company (Synthetic)", "example-company", workspace, "2026-01-15")
         tracked = [workspace / relative for relative, _ in COLLECTIONS.values()]
         prior = {path: path.read_bytes() for path in tracked}
         for bundle_name in ("run-001-public", "run-002-crm-interview", "run-003-contract-support-usage"):
@@ -264,7 +264,7 @@ def gate_g11(context: dict) -> str:
         bundle = Path(temp) / "downgrade"
         bad_claim = {
             "id": "claim:bad-policy-downgrade",
-            "subject_id": "product:orbit-ops",
+            "subject_id": "product:example-product",
             "predicate": "ProductUseService.bad_policy_test",
             "value": "must not publish",
             "claim_type": "observation",
@@ -278,9 +278,9 @@ def gate_g11(context: dict) -> str:
             "supersedes": [],
             "contradicts": [],
             "policy_id": "policy:public",
-            "created_by_run": "run:northstar:bad-policy",
+            "created_by_run": "run:example-company:bad-policy",
         }
-        make_run_bundle(bundle, "run:northstar:bad-policy", "snapshot:northstar:003", "snapshot:northstar:bad-policy", [bad_claim])
+        make_run_bundle(bundle, "run:example-company:bad-policy", "snapshot:example-company:003", "snapshot:example-company:bad-policy", [bad_claim])
         expect_rejected_unchanged(workspace, bundle, "less restrictive")
     return "注入的客户成功证据公开降级在写入前被拒绝，工作区保持不变"
 
@@ -381,7 +381,7 @@ def gate_g16(context: dict) -> str:
     )
     require(completed.returncode == 0, completed.stdout + completed.stderr)
     count = completed.stderr.count(" ... ok") + completed.stdout.count(" ... ok")
-    require(count >= 5, "应至少执行五项单元/集成测试")
+    require(count >= 6, "应至少执行六项单元/集成测试")
     return f"标准库 unittest 测试套件通过（{count} 项测试）"
 
 

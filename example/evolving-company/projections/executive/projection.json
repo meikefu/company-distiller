@@ -1,14 +1,14 @@
 {
-  "id": "projection:northstar-industries:003:executive",
-  "company_id": "company:northstar-industries",
-  "snapshot_id": "snapshot:northstar:003",
+  "id": "projection:example-company:003:executive",
+  "company_id": "company:example-company",
+  "snapshot_id": "snapshot:example-company:003",
   "audience": "executive",
   "purpose": "executive-review",
   "claim_ids": [
     "claim:company-category-v2",
     "claim:contract-obligation",
+    "claim:example-product-positioning-v1",
     "claim:opportunity-stage-validation",
-    "claim:orbit-positioning-v1",
     "claim:sev1-observed",
     "claim:usage-active-sites"
   ],
@@ -19,7 +19,7 @@
     "claim:procurement-statement-retracted"
   ],
   "conflict_claim_ids": [
-    "claim:orbit-positioning-v1",
+    "claim:example-product-positioning-v1",
     "claim:sev1-observed"
   ],
   "retraction_claim_ids": [
@@ -59,16 +59,16 @@
     "event:usage-june"
   ],
   "run_ids": [
-    "run:northstar:001",
-    "run:northstar:002",
-    "run:northstar:003"
+    "run:example-company:001",
+    "run:example-company:002",
+    "run:example-company:003"
   ],
   "relation_ids": [
     "relation:account-has-opportunity",
-    "relation:contract-party-northstar",
-    "relation:northstar-offers-orbit",
-    "relation:subscription-uses-orbit"
+    "relation:contract-party-example-company",
+    "relation:example-company-offers-example-product",
+    "relation:subscription-uses-example-product"
   ],
   "created_at": "2026-07-01T01:00:00+00:00",
-  "content_hash": "sha256:b565897f0d5f1cae839f8b9fa47a6c1e333b23d13180f96d7b5371cac2610471"
+  "content_hash": "sha256:88094ab0547a885e33b562a9e13ec7ef910b2540cb4ba6f45340fec0e51ffb49"
 }

@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -67,6 +68,24 @@ class SchemaTests(unittest.TestCase):
 
 
 class IntegrationTests(unittest.TestCase):
+    def test_repository_example_is_explicitly_synthetic(self):
+        example = ROOT / "example" / "evolving-company" / "company-object"
+        manifest = json.loads((example / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["company_id"], "company:example-company")
+        self.assertEqual(manifest["company_name"], "Example Company (Synthetic)")
+
+        sources = [
+            json.loads(line)
+            for line in (example / "sources" / "sources.jsonl").read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        self.assertTrue(sources)
+        self.assertTrue(all(source["connector"] == "fixture" for source in sources))
+        for source in sources:
+            parsed = urlparse(source["locator"])
+            if parsed.scheme in {"http", "https"}:
+                self.assertEqual(parsed.hostname, "example.invalid")
+
     def test_three_run_example_and_projections_validate(self):
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp) / "example"

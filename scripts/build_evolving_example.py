@@ -18,7 +18,7 @@ PUBLIC = "policy:public"
 SALES = "policy:confidential-sales"
 CS = "policy:confidential-cs"
 EXEC = "policy:restricted-executive"
-COMPANY = "company:northstar-industries"
+COMPANY = "company:example-company"
 
 
 def confidence(reliability="high", corroboration="single", strength="direct", overall="high"):
@@ -144,29 +144,29 @@ def write_bundle(root: Path, run: dict, rows: dict[str, list[dict]]) -> None:
 
 
 def run_one(root: Path):
-    run_id = "run:northstar:001"
+    run_id = "run:example-company:001"
     at = "2026-01-15T09:00:00+00:00"
     rows = empty_bundle_rows()
     rows["entities"] = [
-        entity(COMPANY, "company", "Northstar Industries", "company", PUBLIC, run_id),
-        entity("legal_entity:northstar-holdings", "legal_entity", "Northstar Industries 控股有限公司", "company", PUBLIC, run_id, COMPANY),
-        entity("business_unit:northstar-software", "business_unit", "Northstar 软件业务单元", "company", PUBLIC, run_id, COMPANY),
-        entity("product:orbit-ops", "product", "OrbitOps", "company", PUBLIC, run_id, COMPANY),
+        entity(COMPANY, "company", "Example Company (Synthetic)", "company", PUBLIC, run_id),
+        entity("legal_entity:example-company-holdings", "legal_entity", "Example Company Holdings (Synthetic)", "company", PUBLIC, run_id, COMPANY),
+        entity("business_unit:example-company-software", "business_unit", "Example Company Software Unit", "company", PUBLIC, run_id, COMPANY),
+        entity("product:example-product", "product", "Example Product", "company", PUBLIC, run_id, COMPANY),
         entity("market:industrial-operations", "market", "工业运营团队", "company", PUBLIC, run_id),
     ]
     rows["sources"] = [
-        source("source:northstar-site-v1", "official_website", "Northstar 公司与产品页面", at, PUBLIC, run_id, "northstar-site", "v1", "https://example.invalid/northstar/about#products")
+        source("source:example-company-site-v1", "official_website", "Example Company fixture profile", at, PUBLIC, run_id, "example-company-site", "v1", "https://example.invalid/example-company/about#products")
     ]
     rows["records"] = [
         {
             "id": "record:public-profile-v1",
             "record_type": "public_fact",
-            "source_id": "source:northstar-site-v1",
-            "subject_ids": [COMPANY, "product:orbit-ops"],
+            "source_id": "source:example-company-site-v1",
+            "subject_ids": [COMPANY, "product:example-product"],
             "observed_at": at,
             "valid_from": "2026-01-01T00:00:00+00:00",
             "valid_to": None,
-            "data": {"fact_name": "company_profile", "value": "工业运营软件与 OrbitOps"},
+            "data": {"fact_name": "company_profile", "value": "合成公司夹具与 Example Product"},
             "policy_id": PUBLIC,
             "created_by_run": run_id,
         }
@@ -178,7 +178,7 @@ def run_one(root: Path):
             "subject_ids": [COMPANY],
             "occurred_at": at,
             "observed_at": at,
-            "source_ids": ["source:northstar-site-v1"],
+            "source_ids": ["source:example-company-site-v1"],
             "record_ids": ["record:public-profile-v1"],
             "data": {"update": "首次建立公开资料"},
             "policy_id": PUBLIC,
@@ -186,14 +186,14 @@ def run_one(root: Path):
         }
     ]
     rows["evidence"] = [
-        evidence("evidence:public-category", "document_excerpt", ["source:northstar-site-v1"], ["record:public-profile-v1"], ["event:public-profile-observed"], "about#company", "Northstar 提供工业运营软件。", at, PUBLIC, run_id),
-        evidence("evidence:public-product", "document_excerpt", ["source:northstar-site-v1"], ["record:public-profile-v1"], ["event:public-profile-observed"], "products#orbitops", "OrbitOps 定位为 7x24 小时高韧性运营平台。", at, PUBLIC, run_id),
+        evidence("evidence:public-category", "document_excerpt", ["source:example-company-site-v1"], ["record:public-profile-v1"], ["event:public-profile-observed"], "about#company", "Example Company 是用于测试公司对象演进的合成夹具。", at, PUBLIC, run_id),
+        evidence("evidence:public-product", "document_excerpt", ["source:example-company-site-v1"], ["record:public-profile-v1"], ["event:public-profile-observed"], "products#example-product", "Example Product 定位为 7x24 小时高韧性运营平台。", at, PUBLIC, run_id),
     ]
     rows["claims"] = [
         claim("claim:company-category-v1", COMPANY, "BusinessModel.category", "工业运营软件", "fact", "company", "2026-01-01T00:00:00+00:00", at, ["evidence:public-category"], PUBLIC, run_id),
-        claim("claim:orbit-positioning-v1", "product:orbit-ops", "Products.positioning", "7x24 小时高韧性运营平台", "statement", "company", "2026-01-01T00:00:00+00:00", at, ["evidence:public-product"], PUBLIC, run_id, conf=confidence("medium", "single", "direct", "medium")),
+        claim("claim:example-product-positioning-v1", "product:example-product", "Products.positioning", "7x24 小时高韧性运营平台", "statement", "company", "2026-01-01T00:00:00+00:00", at, ["evidence:public-product"], PUBLIC, run_id, conf=confidence("medium", "single", "direct", "medium")),
     ]
-    rows["relations"] = [relation("relation:northstar-offers-orbit", COMPANY, "offers", "product:orbit-ops", "2026-01-01T00:00:00+00:00", ["evidence:public-product"], PUBLIC, run_id)]
+    rows["relations"] = [relation("relation:example-company-offers-example-product", COMPANY, "offers", "product:example-product", "2026-01-01T00:00:00+00:00", ["evidence:public-product"], PUBLIC, run_id)]
     run = {
         "id": run_id,
         "company_id": COMPANY,
@@ -206,22 +206,22 @@ def run_one(root: Path):
         "input_digest": "",
         "connector_cursors": {"public": "2026-01-15"},
         "status": "completed",
-        "result_snapshot_id": "snapshot:northstar:001",
+        "result_snapshot_id": "snapshot:example-company:001",
     }
     write_bundle(root, run, rows)
 
 
 def run_two(root: Path):
-    run_id = "run:northstar:002"
+    run_id = "run:example-company:002"
     at = "2026-03-10T12:00:00+00:00"
     rows = empty_bundle_rows()
     rows["entities"] = [
-        entity("account:northstar-crm", "account", "Northstar CRM 客户", "commercial_relationship", SALES, run_id),
-        entity("opportunity:orbit-security", "opportunity", "OrbitOps 安全项目商机", "commercial_relationship", SALES, run_id, "account:northstar-crm"),
+        entity("account:example-company-crm", "account", "Example Company CRM Account", "commercial_relationship", SALES, run_id),
+        entity("opportunity:example-security", "opportunity", "Example Product Security Opportunity", "commercial_relationship", SALES, run_id, "account:example-company-crm"),
         entity("role:security-sponsor", "role", "安全项目发起人", "commercial_relationship", SALES, run_id),
     ]
     rows["sources"] = [
-        source("source:northstar-site-v2", "official_website", "Northstar 公司页面修订版", at, PUBLIC, run_id, "northstar-site", "v2", "https://example.invalid/northstar/about#category"),
+        source("source:example-company-site-v2", "official_website", "Example Company fixture profile revision", at, PUBLIC, run_id, "example-company-site", "v2", "https://example.invalid/example-company/about#category"),
         source("source:crm-export-001", "crm", "CRM 客户与商机导出", at, SALES, run_id, "crm-account-991", "2026-03-10", "crm://accounts/991"),
         source("source:interview-001", "interview", "安全项目发起人访谈", "2026-03-09T16:00:00+00:00", SALES, run_id, "interview-001", "v1", "interview://001#segment-07"),
     ]
@@ -229,7 +229,7 @@ def run_two(root: Path):
         {
             "id": "record:public-profile-v2",
             "record_type": "public_fact",
-            "source_id": "source:northstar-site-v2",
+            "source_id": "source:example-company-site-v2",
             "subject_ids": [COMPANY],
             "observed_at": at,
             "valid_from": "2026-01-01T00:00:00+00:00",
@@ -242,7 +242,7 @@ def run_two(root: Path):
             "id": "record:crm-account-001",
             "record_type": "crm_account",
             "source_id": "source:crm-export-001",
-            "subject_ids": ["account:northstar-crm", COMPANY],
+            "subject_ids": ["account:example-company-crm", COMPANY],
             "observed_at": at,
             "valid_from": at,
             "valid_to": None,
@@ -254,11 +254,11 @@ def run_two(root: Path):
             "id": "record:crm-opportunity-001",
             "record_type": "crm_opportunity",
             "source_id": "source:crm-export-001",
-            "subject_ids": ["opportunity:orbit-security", "account:northstar-crm"],
+            "subject_ids": ["opportunity:example-security", "account:example-company-crm"],
             "observed_at": at,
             "valid_from": at,
             "valid_to": None,
-            "data": {"stage": "discovery", "account_id": "account:northstar-crm", "close_date": "2026-09-30", "buying_context": "TEST_ONLY_CRM_SENTINEL_NEON 安全体系现代化"},
+            "data": {"stage": "discovery", "account_id": "account:example-company-crm", "close_date": "2026-09-30", "buying_context": "TEST_ONLY_CRM_SENTINEL_NEON 安全体系现代化"},
             "policy_id": SALES,
             "created_by_run": run_id,
         },
@@ -279,7 +279,7 @@ def run_two(root: Path):
         {
             "id": "event:opportunity-discovery",
             "event_type": "opportunity_stage_changed",
-            "subject_ids": ["opportunity:orbit-security"],
+            "subject_ids": ["opportunity:example-security"],
             "occurred_at": at,
             "observed_at": at,
             "source_ids": ["source:crm-export-001"],
@@ -302,22 +302,22 @@ def run_two(root: Path):
         },
     ]
     rows["evidence"] = [
-        evidence("evidence:public-category-v2", "document_excerpt", ["source:northstar-site-v2"], ["record:public-profile-v2"], [], "about#category", "Northstar 提供工业运营软件。", at, PUBLIC, run_id),
+        evidence("evidence:public-category-v2", "document_excerpt", ["source:example-company-site-v2"], ["record:public-profile-v2"], [], "about#category", "Example Company 是用于测试公司对象演进的合成夹具。", at, PUBLIC, run_id),
         evidence("evidence:crm-opportunity", "structured_observation", ["source:crm-export-001"], ["record:crm-opportunity-001"], ["event:opportunity-discovery"], "opportunity.stage", "商机阶段为 discovery；客户备注标记为 TEST_ONLY_CRM_SENTINEL_NEON。", at, SALES, run_id),
         evidence("evidence:interview-procurement", "interview_statement", ["source:interview-001"], ["record:interview-segment-001"], ["event:interview-001"], "segment-07", "项目发起人表示，安全采购由总部统一管理。", at, SALES, run_id),
     ]
     rows["claims"] = [
         claim("claim:company-category-v2", COMPANY, "BusinessModel.category", "工业运营软件", "fact", "company", "2026-01-01T00:00:00+00:00", at, ["evidence:public-category-v2"], PUBLIC, run_id, supersedes=["claim:company-category-v1"], conf=confidence("high", "multiple", "direct", "high")),
-        claim("claim:opportunity-stage-discovery", "opportunity:orbit-security", "CommercialRelationship.opportunity_stage", "探索阶段（discovery）/ TEST_ONLY_CRM_SENTINEL_NEON", "observation", "commercial_relationship", at, at, ["evidence:crm-opportunity"], SALES, run_id),
+        claim("claim:opportunity-stage-discovery", "opportunity:example-security", "CommercialRelationship.opportunity_stage", "探索阶段（discovery）/ TEST_ONLY_CRM_SENTINEL_NEON", "observation", "commercial_relationship", at, at, ["evidence:crm-opportunity"], SALES, run_id),
         claim("claim:procurement-centralized", COMPANY, "CommercialRelationship.procurement_model", "安全采购由总部统一管理", "statement", "commercial_relationship", "2026-03-09T16:00:00+00:00", at, ["evidence:interview-procurement"], SALES, run_id, conf=confidence("medium", "single", "direct", "medium")),
     ]
     rows["relations"] = [
-        relation("relation:account-has-opportunity", "account:northstar-crm", "contains", "opportunity:orbit-security", at, ["evidence:crm-opportunity"], SALES, run_id)
+        relation("relation:account-has-opportunity", "account:example-company-crm", "contains", "opportunity:example-security", at, ["evidence:crm-opportunity"], SALES, run_id)
     ]
     run = {
         "id": run_id,
         "company_id": COMPANY,
-        "base_snapshot_id": "snapshot:northstar:001",
+        "base_snapshot_id": "snapshot:example-company:001",
         "started_at": "2026-03-10T11:58:00+00:00",
         "completed_at": at,
         "mode": "incremental",
@@ -326,38 +326,38 @@ def run_two(root: Path):
         "input_digest": "",
         "connector_cursors": {"public": "2026-03-10", "crm": "cursor-001", "interview": "interview-001"},
         "status": "completed",
-        "result_snapshot_id": "snapshot:northstar:002",
+        "result_snapshot_id": "snapshot:example-company:002",
     }
     write_bundle(root, run, rows)
 
 
 def run_three(root: Path):
-    run_id = "run:northstar:003"
+    run_id = "run:example-company:003"
     at = "2026-07-01T01:00:00+00:00"
     rows = empty_bundle_rows()
     rows["entities"] = [
-        entity("contract:orbit-enterprise-001", "contract", "OrbitOps 企业协议", "commercial_relationship", EXEC, run_id),
-        entity("subscription:orbit-prod", "subscription", "OrbitOps 生产环境订阅", "product_use_service", CS, run_id),
-        entity("ticket:sev1-042", "ticket", "OrbitOps SEV-1 工单 042", "product_use_service", CS, run_id),
+        entity("contract:example-enterprise-001", "contract", "Example Product Enterprise Agreement", "commercial_relationship", EXEC, run_id),
+        entity("subscription:example-product-test", "subscription", "Example Product Test Subscription", "product_use_service", CS, run_id),
+        entity("ticket:sev1-042", "ticket", "Example Product SEV-1 Test Ticket 042", "product_use_service", CS, run_id),
         entity("metric:weekly-active-sites", "metric", "每周活跃站点", "product_use_service", CS, run_id),
     ]
     rows["sources"] = [
         source("source:crm-export-002", "crm", "CRM 商机更新", at, SALES, run_id, "crm-account-991", "2026-06-30", "crm://accounts/991/opportunities/7"),
         source("source:interview-correction", "interview", "安全项目发起人访谈更正", "2026-06-15T10:00:00+00:00", SALES, run_id, "interview-001-correction", "v1", "interview://001/correction"),
-        source("source:contract-001", "contract", "OrbitOps 企业协议", "2026-06-20T12:00:00+00:00", EXEC, run_id, "contract-001", "signed-v1", "contract://001#pricing"),
+        source("source:contract-001", "contract", "Example Product Enterprise Agreement", "2026-06-20T12:00:00+00:00", EXEC, run_id, "contract-001", "signed-v1", "contract://001#pricing"),
         source("source:support-042", "support", "SEV-1 支持工单", "2026-06-25T15:00:00+00:00", CS, run_id, "ticket-042", "closed-v1", "support://tickets/042"),
-        source("source:usage-june", "product_analytics", "六月使用量汇总", at, CS, run_id, "usage-northstar-june", "v1", "warehouse://usage/northstar/2026-06"),
+        source("source:usage-june", "product_analytics", "六月使用量汇总", at, CS, run_id, "usage-example-company-june", "v1", "warehouse://usage/example-company/2026-06"),
     ]
     rows["records"] = [
         {
             "id": "record:crm-opportunity-002",
             "record_type": "crm_opportunity",
             "source_id": "source:crm-export-002",
-            "subject_ids": ["opportunity:orbit-security", "account:northstar-crm"],
+            "subject_ids": ["opportunity:example-security", "account:example-company-crm"],
             "observed_at": at,
             "valid_from": "2026-06-30T12:00:00+00:00",
             "valid_to": None,
-            "data": {"stage": "validation", "account_id": "account:northstar-crm", "close_date": "2026-09-30", "buying_context": "安全试点验证"},
+            "data": {"stage": "validation", "account_id": "account:example-company-crm", "close_date": "2026-09-30", "buying_context": "安全试点验证"},
             "policy_id": SALES,
             "created_by_run": run_id,
         },
@@ -377,11 +377,11 @@ def run_three(root: Path):
             "id": "record:contract-term-001",
             "record_type": "contract_term",
             "source_id": "source:contract-001",
-            "subject_ids": [COMPANY, "contract:orbit-enterprise-001", "product:orbit-ops"],
+            "subject_ids": [COMPANY, "contract:example-enterprise-001", "product:example-product"],
             "observed_at": at,
             "valid_from": "2026-07-01T00:00:00+00:00",
             "valid_to": "2027-06-30T23:59:59+00:00",
-            "data": {"signing_entity_ids": ["legal_entity:northstar-holdings"], "contract_id": "contract-001", "version": "signed-v1", "effective_from": "2026-07-01", "effective_to": "2027-06-30", "product_id": "product:orbit-ops", "term": "高管级定价代码 TEST_ONLY_CONTRACT_SENTINEL_VAULT", "amount": 840000, "currency": "USD"},
+            "data": {"signing_entity_ids": ["legal_entity:example-company-holdings"], "contract_id": "contract-001", "version": "signed-v1", "effective_from": "2026-07-01", "effective_to": "2027-06-30", "product_id": "product:example-product", "term": "高管级定价代码 TEST_ONLY_CONTRACT_SENTINEL_VAULT", "amount": 840000, "currency": "USD"},
             "policy_id": EXEC,
             "created_by_run": run_id,
         },
@@ -389,11 +389,11 @@ def run_three(root: Path):
             "id": "record:support-ticket-042",
             "record_type": "support_ticket",
             "source_id": "source:support-042",
-            "subject_ids": [COMPANY, "ticket:sev1-042", "product:orbit-ops"],
+            "subject_ids": [COMPANY, "ticket:sev1-042", "product:example-product"],
             "observed_at": at,
             "valid_from": "2026-06-25T09:00:00+00:00",
             "valid_to": "2026-06-25T15:00:00+00:00",
-            "data": {"product_id": "product:orbit-ops", "product_version": "4.8.1", "severity": "SEV-1", "state": "resolved", "opened_at": "2026-06-25T09:00:00Z", "closed_at": "2026-06-25T15:00:00Z", "root_cause": "故障转移回路 TEST_ONLY_TICKET_SENTINEL_CIRCUIT"},
+            "data": {"product_id": "product:example-product", "product_version": "4.8.1", "severity": "SEV-1", "state": "resolved", "opened_at": "2026-06-25T09:00:00Z", "closed_at": "2026-06-25T15:00:00Z", "root_cause": "故障转移回路 TEST_ONLY_TICKET_SENTINEL_CIRCUIT"},
             "policy_id": CS,
             "created_by_run": run_id,
         },
@@ -401,7 +401,7 @@ def run_three(root: Path):
             "id": "record:usage-june",
             "record_type": "product_usage",
             "source_id": "source:usage-june",
-            "subject_ids": [COMPANY, "subscription:orbit-prod", "metric:weekly-active-sites"],
+            "subject_ids": [COMPANY, "subscription:example-product-test", "metric:weekly-active-sites"],
             "observed_at": at,
             "valid_from": "2026-06-01T00:00:00+00:00",
             "valid_to": "2026-06-30T23:59:59+00:00",
@@ -414,7 +414,7 @@ def run_three(root: Path):
         {
             "id": "event:opportunity-validation",
             "event_type": "opportunity_stage_changed",
-            "subject_ids": ["opportunity:orbit-security"],
+            "subject_ids": ["opportunity:example-security"],
             "occurred_at": "2026-06-30T12:00:00+00:00",
             "observed_at": at,
             "source_ids": ["source:crm-export-002"],
@@ -426,7 +426,7 @@ def run_three(root: Path):
         {
             "id": "event:contract-signed",
             "event_type": "contract_signed",
-            "subject_ids": [COMPANY, "contract:orbit-enterprise-001"],
+            "subject_ids": [COMPANY, "contract:example-enterprise-001"],
             "occurred_at": "2026-06-20T12:00:00+00:00",
             "observed_at": at,
             "source_ids": ["source:contract-001"],
@@ -438,7 +438,7 @@ def run_three(root: Path):
         {
             "id": "event:ticket-resolved-042",
             "event_type": "ticket_resolved",
-            "subject_ids": ["ticket:sev1-042", "product:orbit-ops"],
+            "subject_ids": ["ticket:sev1-042", "product:example-product"],
             "occurred_at": "2026-06-25T15:00:00+00:00",
             "observed_at": at,
             "source_ids": ["source:support-042"],
@@ -450,7 +450,7 @@ def run_three(root: Path):
         {
             "id": "event:usage-june",
             "event_type": "usage_observed",
-            "subject_ids": ["subscription:orbit-prod", "metric:weekly-active-sites"],
+            "subject_ids": ["subscription:example-product-test", "metric:weekly-active-sites"],
             "occurred_at": "2026-06-30T23:59:59+00:00",
             "observed_at": at,
             "source_ids": ["source:usage-june"],
@@ -468,21 +468,21 @@ def run_three(root: Path):
         evidence("evidence:usage-active-sites", "usage_aggregate", ["source:usage-june"], ["record:usage-june"], ["event:usage-june"], "metric:weekly-active-sites", "生产环境每周活跃站点为 37 个；质量标记为 TEST_ONLY_USAGE_SENTINEL_PULSE。", at, CS, run_id),
     ]
     rows["claims"] = [
-        claim("claim:opportunity-stage-validation", "opportunity:orbit-security", "CommercialRelationship.opportunity_stage", "验证阶段（validation）", "observation", "commercial_relationship", "2026-06-30T12:00:00+00:00", at, ["evidence:crm-validation"], SALES, run_id, supersedes=["claim:opportunity-stage-discovery"]),
+        claim("claim:opportunity-stage-validation", "opportunity:example-security", "CommercialRelationship.opportunity_stage", "验证阶段（validation）", "observation", "commercial_relationship", "2026-06-30T12:00:00+00:00", at, ["evidence:crm-validation"], SALES, run_id, supersedes=["claim:opportunity-stage-discovery"]),
         claim("claim:procurement-statement-retracted", COMPANY, "CommercialRelationship.procurement_model", "已撤回此前关于集中采购的陈述", "statement", "commercial_relationship", "2026-06-15T10:00:00+00:00", at, ["evidence:interview-correction"], SALES, run_id, decision="retracted", supersedes=["claim:procurement-centralized"], conf=confidence("high", "single", "direct", "high")),
-        claim("claim:contract-obligation", "contract:orbit-enterprise-001", "CommercialRelationship.annual_obligation", "USD 840000 / TEST_ONLY_CONTRACT_SENTINEL_VAULT", "obligation", "commercial_relationship", "2026-07-01T00:00:00+00:00", at, ["evidence:contract-pricing"], EXEC, run_id),
-        claim("claim:sev1-observed", "product:orbit-ops", "ProductUseService.continuity_incident", "已解决的 SEV-1 / TEST_ONLY_TICKET_SENTINEL_CIRCUIT", "observation", "product_use_service", "2026-06-25T09:00:00+00:00", at, ["evidence:ticket-sev1"], CS, run_id, contradicts=["claim:orbit-positioning-v1"], conf=confidence("high", "single", "direct", "high")),
-        claim("claim:usage-active-sites", "subscription:orbit-prod", "ProductUseService.weekly_active_sites", {"value": 37, "unit": "sites", "quality": "TEST_ONLY_USAGE_SENTINEL_PULSE"}, "metric", "product_use_service", "2026-06-01T00:00:00+00:00", at, ["evidence:usage-active-sites"], CS, run_id),
+        claim("claim:contract-obligation", "contract:example-enterprise-001", "CommercialRelationship.annual_obligation", "USD 840000 / TEST_ONLY_CONTRACT_SENTINEL_VAULT", "obligation", "commercial_relationship", "2026-07-01T00:00:00+00:00", at, ["evidence:contract-pricing"], EXEC, run_id),
+        claim("claim:sev1-observed", "product:example-product", "ProductUseService.continuity_incident", "已解决的 SEV-1 / TEST_ONLY_TICKET_SENTINEL_CIRCUIT", "observation", "product_use_service", "2026-06-25T09:00:00+00:00", at, ["evidence:ticket-sev1"], CS, run_id, contradicts=["claim:example-product-positioning-v1"], conf=confidence("high", "single", "direct", "high")),
+        claim("claim:usage-active-sites", "subscription:example-product-test", "ProductUseService.weekly_active_sites", {"value": 37, "unit": "sites", "quality": "TEST_ONLY_USAGE_SENTINEL_PULSE"}, "metric", "product_use_service", "2026-06-01T00:00:00+00:00", at, ["evidence:usage-active-sites"], CS, run_id),
         claim("claim:usage-implies-satisfaction", COMPANY, "ProductUseService.satisfaction", "较高使用量可能意味着较高满意度", "hypothesis", "product_use_service", "2026-06-01T00:00:00+00:00", at, ["evidence:usage-active-sites"], CS, run_id, decision="proposed", conf=confidence("medium", "single", "speculative", "low")),
     ]
     rows["relations"] = [
-        relation("relation:contract-party-northstar", "contract:orbit-enterprise-001", "party_to", "legal_entity:northstar-holdings", "2026-07-01T00:00:00+00:00", ["evidence:contract-pricing"], EXEC, run_id),
-        relation("relation:subscription-uses-orbit", "subscription:orbit-prod", "uses_product", "product:orbit-ops", "2026-06-01T00:00:00+00:00", ["evidence:usage-active-sites"], CS, run_id),
+        relation("relation:contract-party-example-company", "contract:example-enterprise-001", "party_to", "legal_entity:example-company-holdings", "2026-07-01T00:00:00+00:00", ["evidence:contract-pricing"], EXEC, run_id),
+        relation("relation:subscription-uses-example-product", "subscription:example-product-test", "uses_product", "product:example-product", "2026-06-01T00:00:00+00:00", ["evidence:usage-active-sites"], CS, run_id),
     ]
     run = {
         "id": run_id,
         "company_id": COMPANY,
-        "base_snapshot_id": "snapshot:northstar:002",
+        "base_snapshot_id": "snapshot:example-company:002",
         "started_at": "2026-07-01T00:55:00+00:00",
         "completed_at": at,
         "mode": "incremental",
@@ -491,7 +491,7 @@ def run_three(root: Path):
         "input_digest": "",
         "connector_cursors": {"crm": "cursor-002", "interview": "correction-001", "contract": "signed-v1", "support": "ticket-042", "usage": "2026-06"},
         "status": "completed",
-        "result_snapshot_id": "snapshot:northstar:003",
+        "result_snapshot_id": "snapshot:example-company:003",
     }
     write_bundle(root, run, rows)
 
@@ -506,7 +506,7 @@ def build(output: Path, force: bool) -> None:
     run_two(bundles / "run-002-crm-interview")
     run_three(bundles / "run-003-contract-support-usage")
     workspace = output / "company-object"
-    scaffold("Northstar Industries", "northstar-industries", workspace, "2026-01-15")
+    scaffold("Example Company (Synthetic)", "example-company", workspace, "2026-01-15")
     for bundle in sorted(bundles.iterdir()):
         apply_run(workspace, bundle)
     projections = output / "projections"

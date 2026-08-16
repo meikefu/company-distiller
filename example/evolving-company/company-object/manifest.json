@@ -1,8 +1,8 @@
 {
   "schema_version": "2.0",
-  "company_id": "company:northstar-industries",
-  "company_name": "Northstar Industries",
-  "slug": "northstar-industries",
+  "company_id": "company:example-company",
+  "company_name": "Example Company (Synthetic)",
+  "slug": "example-company",
   "created_on": "2026-01-15",
-  "current_snapshot_id": "snapshot:northstar:003"
+  "current_snapshot_id": "snapshot:example-company:003"
 }

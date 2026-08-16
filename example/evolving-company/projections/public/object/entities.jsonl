@@ -1,2 +1,2 @@
-{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"company","external_ids":{},"id":"company:northstar-industries","name":"Northstar Industries","parent_id":null,"policy_id":"policy:public","scope":"company"}
-{"aliases":[],"created_by_run":"run:northstar:001","entity_type":"product","external_ids":{},"id":"product:orbit-ops","name":"OrbitOps","parent_id":"company:northstar-industries","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:example-company:001","entity_type":"company","external_ids":{},"id":"company:example-company","name":"Example Company (Synthetic)","parent_id":null,"policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:example-company:001","entity_type":"product","external_ids":{},"id":"product:example-product","name":"Example Product","parent_id":"company:example-company","policy_id":"policy:public","scope":"company"}

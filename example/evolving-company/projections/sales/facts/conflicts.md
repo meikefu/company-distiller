@@ -1,6 +1,6 @@
 # 未解决冲突
 
-## claim:orbit-positioning-v1
+## claim:example-product-positioning-v1
 
 - 值：7x24 小时高韧性运营平台
 - 可见的备选 Claim：无获授权项

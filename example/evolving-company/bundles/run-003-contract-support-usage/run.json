@@ -1,13 +1,13 @@
 {
-  "id": "run:northstar:003",
-  "company_id": "company:northstar-industries",
-  "base_snapshot_id": "snapshot:northstar:002",
+  "id": "run:example-company:003",
+  "company_id": "company:example-company",
+  "base_snapshot_id": "snapshot:example-company:002",
   "started_at": "2026-07-01T00:55:00+00:00",
   "completed_at": "2026-07-01T01:00:00+00:00",
   "mode": "incremental",
   "model": "fixture-distiller-v1",
   "prompt_version": "company-distiller-v2",
-  "input_digest": "sha256:a4265c17fe416dbee4105630f62db949e4b8a5bb6859f371a77d43c16d4af045",
+  "input_digest": "sha256:1acb17a868e63fd4e956336dc3150376c7dcd4674437ae674d8c73aecc494aa5",
   "connector_cursors": {
     "crm": "cursor-002",
     "interview": "correction-001",
@@ -16,5 +16,5 @@
     "usage": "2026-06"
   },
   "status": "completed",
-  "result_snapshot_id": "snapshot:northstar:003"
+  "result_snapshot_id": "snapshot:example-company:003"
 }

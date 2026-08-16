@@ -1,11 +1,11 @@
 ---
-name: northstar-industries-sales-company-skill
-description: "面向 sales 受众、用途为 account-planning 的 Northstar Industries 受治理公司对象 Skill。用于回答有证据支持的公司问题，开展商业关系、产品使用、风险和客户规划分析，并识别过期数据。"
+name: example-company-sales-company-skill
+description: "面向 sales 受众、用途为 account-planning 的 Example Company (Synthetic) 受治理公司对象 Skill。用于回答有证据支持的公司问题，开展商业关系、产品使用、风险和客户规划分析，并识别过期数据。"
 ---
 
-# Northstar Industries 公司 Skill
+# Example Company (Synthetic) 公司 Skill
 
-这是快照 `snapshot:northstar:003` 面向 `sales` 受众、服务于 `account-planning` 用途的只读投影。
+这是快照 `snapshot:example-company:003` 面向 `sales` 受众、服务于 `account-planning` 用途的只读投影。
 规范层的原始记录和事件不包含在本交付包中。
 
 ## 证据日期

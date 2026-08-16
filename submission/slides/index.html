@@ -235,24 +235,13 @@
       background: #eaf5fb;
     }
 
-    .hero-visual img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
     .hero-visual .asset-fallback {
       position: absolute;
       inset: 0;
-      display: none;
+      display: block;
       padding: 42px;
       background: #eaf5fb;
     }
-
-    .hero-visual.asset-missing .asset-fallback { display: block; }
-
-    .hero-visual.asset-missing img { display: none; }
 
     .fallback-ledger {
       height: 100%;
@@ -265,9 +254,16 @@
 
     .fallback-ledger b {
       display: block;
-      margin-bottom: 36px;
+      margin-bottom: 12px;
       font-family: inherit;
       font-size: 17px;
+    }
+
+    .fallback-ledger small {
+      display: block;
+      margin-bottom: 30px;
+      color: #607782;
+      font-size: 13px;
     }
 
     .fallback-ledger span {
@@ -1054,10 +1050,10 @@
           </div>
         </div>
         <figure class="hero-visual">
-          <img src="assets/evidence-system.png" alt="Company Distiller 版本化证据系统视觉，展示 Claim、Evidence、Run 和 Snapshot 之间的关系">
-          <div class="asset-fallback" aria-hidden="true">
+          <div class="asset-fallback" role="img" aria-label="Company Distiller 版本化证据系统视觉，展示 Claim、Evidence、Run 和 Snapshot 之间的关系">
             <div class="fallback-ledger">
               <b>VERSIONED COMPANY OBJECT</b>
+              <small>snapshot:example-company:003 · SYNTHETIC FIXTURE</small>
               <span>CLAIM / opportunity_stage</span>
               <span>EVIDENCE / crm-validation</span>
               <span>TIME / valid + observed</span>
@@ -1065,7 +1061,7 @@
               <span>PROJECTION / audience × purpose</span>
             </div>
           </div>
-          <figcaption class="hero-label">版本化公司对象 · snapshot:northstar:003</figcaption>
+          <figcaption class="hero-label">版本化公司对象 · snapshot:example-company:003</figcaption>
         </figure>
         <span class="slide-number">01</span>
         <template class="speaker-notes">
@@ -1109,7 +1105,7 @@
         <span class="slide-number">02</span>
         <template class="speaker-notes">
           <p>客户经理在拜访或账户复盘前，通常需要把六类材料拼在一起。难点不只是找资料，而是判断哪些信息能采信、是否仍有效、冲突是否解决，以及能否交付给当前受众。</p>
-          <p>这里必须坦诚：当前问题模型已经在原型中实现，但还没有真实用户访谈和现行流程基线。后续至少用一位真实客户经理和一个匿名账户完成同输入对照。</p>
+          <p>这里必须坦诚：当前问题模型已经在原型中实现，但还没有真实用户流程基线。后续至少在仓库外受控环境用一位真实客户经理和一个匿名账户完成同输入对照，仓库只记录聚合指标。</p>
           <div class="notes-sources">[Sources]<br>references/system-architecture.md；submission/ai-innovation-product-spec.md。</div>
         </template>
       </section>
@@ -1179,7 +1175,7 @@
         <div class="claim-layout">
           <pre class="claim-code"><span class="claim-id">claim:opportunity-stage-validation</span><code><span class="comment">// CRM 阶段只是卖方观察</span>
 {
-  <span class="key">"subject_id"</span>: <span class="value">"opportunity:orbit-security"</span>,
+  <span class="key">"subject_id"</span>: <span class="value">"opportunity:example-security"</span>,
   <span class="key">"predicate"</span>: <span class="value">"opportunity_stage"</span>,
   <span class="key">"value"</span>: <span class="value">"验证阶段（validation）"</span>,
   <span class="key">"claim_type"</span>: <span class="accepted">"observation"</span>,
@@ -1238,7 +1234,7 @@
         <div class="timeline-legend">
           <span>3 次运行</span><span>3 个快照</span><span>parent_snapshot_id 串成演进链</span><span>旧账本逐字节保留</span>
         </div>
-        <p class="source-line">Northstar Industries 为完全合成企业；变化字段来自 changes/index.jsonl。</p>
+        <p class="source-line">Example Company (Synthetic) 是明确标记的合成夹具；变化字段来自 changes/index.jsonl。</p>
         <span class="slide-number">05</span>
         <template class="speaker-notes">
           <p>第一轮只有公开资料；第二轮加入 CRM 和访谈；第三轮加入合同、工单和使用数据。核心不是“又生成了一份报告”，而是显式记录了强化、替代、撤回、冲突以及不发布。</p>
@@ -1288,7 +1284,7 @@
             <span class="visibility">受限管理复盘视图</span>
           </article>
         </div>
-        <p class="views-note">共同基线：snapshot:northstar:003 · 语义策略过滤 ≠ 身份认证 / 系统访问控制</p>
+        <p class="views-note">共同基线：snapshot:example-company:003 · 语义策略过滤 ≠ 身份认证 / 系统访问控制</p>
         <span class="slide-number">06</span>
         <template class="speaker-notes">
           <p>这四份视图来自同一个 snapshot，不是四次随机改写。公众看不到内部商业信息，销售看到商机阶段，客户成功看到使用与服务信号，管理层才能看到合同义务和完整冲突。</p>
@@ -1307,7 +1303,7 @@
             <small>覆盖 Schema、证据闭环、双时间、增量基线、生命周期、策略隔离与确定性重放。</small>
           </div>
           <div class="proof-grid">
-            <div class="proof-item"><strong>5/5</strong><span>单元与集成测试</span></div>
+            <div class="proof-item"><strong>6/6</strong><span>单元与集成测试</span></div>
             <div class="proof-item"><strong>15</strong><span>机器可读 Schema</span></div>
             <div class="proof-item"><strong>3 · 3 · 4</strong><span>运行 · 快照 · 受众投影</span></div>
             <div class="proof-item"><strong>6</strong><span>知识变化语义全部覆盖</span></div>
@@ -1319,8 +1315,8 @@
         <p class="source-line">验收基线：commit 5d5043f · acceptance-report.json · 2026-08-14 复验。</p>
         <span class="slide-number">07</span>
         <template class="speaker-notes">
-          <p>我不把一段成功演示当作质量证明，所以发布条件被做成 16 项可执行门禁；5 项测试全部通过，15 个 Schema 可解析，三轮运行和四类投影可从零重建，两次全新重放哈希一致。</p>
-          <p>这些只证明结构、引用、状态、策略和确定性。它们不证明模型抽取质量，也不证明节省工时或提升赢单率。0.13 秒与 1.19 秒只是不含模型推理和人工审核的本地技术时长，不作为本页大指标。</p>
+          <p>我不把一段成功演示当作质量证明，所以发布条件被做成 16 项可执行门禁；6 项测试全部通过，15 个 Schema 可解析，三轮运行和四类投影可从零重建，两次全新重放哈希一致。</p>
+          <p>这些只证明结构、引用、状态、策略和确定性。它们不证明模型抽取质量，也不证明节省工时或提升赢单率。本地技术耗时不包含模型推理和人工审核，应以本次现场运行输出为准。</p>
           <div class="notes-sources">[Sources]<br>example/evolving-company/acceptance-report.json；references/evaluation-rubric.md。</div>
         </template>
       </section>
@@ -1355,7 +1351,7 @@
         <p class="source-line">建议决策：进入匿名真实账户验证，而不是继续堆叠工程指标。</p>
         <span class="slide-number">08</span>
         <template class="speaker-notes">
-          <p>Company Distiller 当前已经是可运行参考原型，但下一步最重要的不是再增加工程指标，而是用真实账户验证业务价值。最低从一个匿名账户和一位真实目标用户开始，明确标注 n=1；随后扩展到不少于十个账户。</p>
+          <p>Company Distiller 当前已经是可运行参考原型，但下一步最重要的不是再增加工程指标，而是在仓库外受控环境验证业务价值。最低从一个匿名账户和一位真实目标用户开始，明确标注 n=1；随后扩展到不少于十个账户，仓库只保留聚合指标。</p>
           <p>产品化还需要连接器、审核流、事务数据库和完整安全基础设施。最终目标不是让 AI 更大胆地下结论，而是让它对每个结论的来源、时间、变化和可见范围负责。</p>
           <div class="notes-sources">[Sources]<br>submission/ai-innovation-product-spec.md；references/high-level-design.md。</div>
         </template>
@@ -1395,17 +1391,10 @@
       const chrome = document.getElementById('chrome');
       const overview = document.getElementById('overview');
       const overviewGrid = overview.querySelector('.overview-grid');
-      const heroImage = document.querySelector('.hero-visual img');
       let index = 0;
       let startedAt = Date.now();
       let touchStartX = null;
       let chromeTimer = null;
-
-      if (heroImage) {
-        const markMissing = () => heroImage.closest('.hero-visual').classList.add('asset-missing');
-        heroImage.addEventListener('error', markMissing);
-        if (heroImage.complete && heroImage.naturalWidth === 0) markMissing();
-      }
 
       const fromHash = () => {
         const value = Number.parseInt(location.hash.replace('#', ''), 10);

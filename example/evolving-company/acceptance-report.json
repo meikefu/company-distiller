@@ -62,7 +62,7 @@
       "id": "G10",
       "name": "确定性重放",
       "status": "PASS",
-      "evidence": "两次全新重放的哈希一致：sha256:1ddc085d61d2c6d7c23dda4b11af35bcd5ccf1485a6fbddbd77c6ea70ef786b4"
+      "evidence": "两次全新重放的哈希一致：sha256:0e7c76ac52764fba21d59b6892bcd125f32f62cbdcb0f8f4dd44b7752e9eee14"
     },
     {
       "id": "G11",
@@ -98,7 +98,7 @@
       "id": "G16",
       "name": "回归测试套件",
       "status": "PASS",
-      "evidence": "标准库 unittest 测试套件通过（5 项测试）"
+      "evidence": "标准库 unittest 测试套件通过（6 项测试）"
     }
   ]
 }
