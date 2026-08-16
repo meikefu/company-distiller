@@ -1,0 +1,7 @@
+{"aliases":[],"created_by_run":"run:byd:001","entity_type":"company","external_ids":{},"id":"company:byd","name":"比亚迪","parent_id":null,"policy_id":"policy:public","scope":"company"}
+{"aliases":["BYD Company Limited","比亞迪股份有限公司"],"created_by_run":"run:byd:001","entity_type":"legal_entity","external_ids":{"HKEX_HKD":"01211","HKEX_RMB":"81211","SZSE":"002594"},"id":"legal:byd-company-limited","name":"比亚迪股份有限公司","parent_id":"company:byd","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:byd:001","entity_type":"business_unit","external_ids":{},"id":"unit:byd-auto-battery","name":"汽车及电池业务","parent_id":"company:byd","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:byd:001","entity_type":"business_unit","external_ids":{},"id":"unit:byd-handset-assembly","name":"手机部件及组装业务","parent_id":"company:byd","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:byd:001","entity_type":"business_unit","external_ids":{},"id":"unit:byd-rail-transit","name":"城市轨道交通业务","parent_id":"company:byd","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:byd:001","entity_type":"product","external_ids":{},"id":"product:byd-blade-battery","name":"刀片电池","parent_id":"unit:byd-auto-battery","policy_id":"policy:public","scope":"company"}
+{"aliases":[],"created_by_run":"run:byd:001","entity_type":"market","external_ids":{},"id":"market:global-nev","name":"全球新能源汽车市场","parent_id":null,"policy_id":"policy:public","scope":"company"}

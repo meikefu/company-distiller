@@ -1,0 +1,37 @@
+{
+  "target_company": {
+    "display_name": "比亚迪",
+    "legal_name": "比亚迪股份有限公司",
+    "english_name": "BYD Company Limited",
+    "slug": "byd",
+    "jurisdiction": "中国",
+    "identifiers": {
+      "HKEX_HKD": "01211",
+      "HKEX_RMB": "81211",
+      "SZSE": "002594"
+    }
+  },
+  "object_boundary": "比亚迪股份有限公司及其合并子公司；业务单元仅按公开披露分层，不纳入未核验子公司清单",
+  "workspace": "./byd-company",
+  "inputs": [
+    "港交所披露的比亚迪 2025 年报",
+    "比亚迪官网 About BYD 页面快照",
+    "港交所披露的 2026 年 7 月产销快报"
+  ],
+  "governance": {
+    "classification": "public",
+    "audiences": ["public", "sales", "customer-success", "executive"],
+    "purposes": ["research", "account-planning", "customer-success", "executive-review"],
+    "personal_data": false
+  },
+  "requested_projection": {
+    "audience": "public",
+    "purpose": "research"
+  },
+  "explicit_exclusions": [
+    "不推定任何 CRM 商机或采购意向",
+    "不推定任何合同、客户关系或产品采纳",
+    "不提供投资建议",
+    "未经审计的 2026 年产销数字必须标注可能调整"
+  ]
+}

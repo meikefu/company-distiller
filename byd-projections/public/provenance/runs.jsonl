@@ -1,0 +1,2 @@
+{"completed_at":"2026-08-16T09:05:00+08:00","id":"run:byd:001","input_digest":"sha256:e64a1682b121699acd790c5557cd85005ca039f2c0217f06a8865ee5de2b1afa","mode":"initial","model":"openai-codex-agent","prompt_version":"company-distiller-v2","result_snapshot_id":"snapshot:byd:001"}
+{"completed_at":"2026-08-16T09:15:00+08:00","id":"run:byd:002","input_digest":"sha256:14076a411fe3178926ed109d1f4ef3bad6dc5851326b0c0529ec4e033bf11211","mode":"incremental","model":"openai-codex-agent","prompt_version":"company-distiller-v2","result_snapshot_id":"snapshot:byd:002"}

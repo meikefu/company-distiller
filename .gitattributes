@@ -1,0 +1,2 @@
+# Preserve immutable source snapshots byte-for-byte and omit noisy text diffs.
+byd-research/raw/* -diff -text
